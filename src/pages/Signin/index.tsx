@@ -1,5 +1,6 @@
-import { Container,Content,Background } from './styles';
-import {FiLogIn, FiMail, FiLock} from 'react-icons/fi';
+import {FiLogIn, FiMail, FiLock, FiArrowLeft} from 'react-icons/fi';
+
+import { Container,Content,Background , Header} from './styles';
 
 import Button from '../../components/button';
 import Input from '../../components/input';
@@ -10,6 +11,12 @@ function Signin(){
   return(
     <Container>
       <Content>
+        <Header>
+          <a href="">
+            <FiArrowLeft style={{marginRight:5}}/>
+            Voltar
+          </a>
+        </Header>
         <img src={logoImg} alt='Anjos de patas'/>
 
         <form action="">

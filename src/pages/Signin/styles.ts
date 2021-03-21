@@ -74,6 +74,24 @@ export const  Content = styled.div`
 
 `
 
+
+export const Header = styled.div`
+  display:flex;
+  align-items:center;
+  width:100%;
+
+  margin-left:45px;
+  a{
+    display: flex;
+    justify-content:center;
+    /* align-items:center; */
+    text-decoration:none;
+    border-radius:12px;
+    border:2px solid #CC9E1F;
+    padding:4px 10px;
+  }
+`;
+
 export const  Background = styled.div`
   flex:1;
   background:url(${signinBackgroundImg}) no-repeat center;
