@@ -1,11 +1,11 @@
-import Signin from './pages/Signin';
+import SignUp from './pages/SignUp';
 
 import GlobalStyle from './styles/global'
 
 function App() {
   return (
     <>
-      <Signin/>
+      <SignUp/>
       <GlobalStyle/>
     </>
 
