@@ -61,14 +61,6 @@ export const SelectTypeUser = styled.div`
   flex-direction:column;
 `;
 
-export const SelectOptions = styled.select`
-  width:100%;
-  border-radius:10px;
-  border:1px solid #CC9E1F;
-  padding:12px;
-  color:#596C83;
-  background:#EEEEF0;
-`;
 
 export const ContainerDataUser = styled.div`
   display:flex;

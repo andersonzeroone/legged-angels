@@ -20,9 +20,10 @@ import {
 import Button from "../../components/button";
 import Input from "../../components/input";
 import InputMask from '../../components/inputM';
+import Select from '../../components/select'
 
 import photo from "../../assets/sign-in-background.jpg";
-import pata from '../../assets/pata.png';
+
 
 import {
   Container,
@@ -32,7 +33,6 @@ import {
   SubTitle,
   SelectTypeUser,
   ContainerTypeUser,
-  SelectOptions,
   ContainerDataUser,
   DataUser,
   Label,
@@ -60,30 +60,24 @@ interface IbgeCityResponse{
 
 function SignUp() {
 
+  const optionsTypeUser = [
+    {value:'common', label:'Doador - possui algum animal ou encontrou um abandonado e deseja achar um novo lar para ele'},
+    {value:'common1', label:'Dono - se você perdeu seu pet e deseja cadastra-ló em nossa plataforma para encontra-lo.'},
+    {value:'ong', label:'ONG - Se é uma organização ou instituição que acolhe animais necessitados e deseja encontrar um novo lar para eles.'},
+  ]
+
   const [ufs, setUfs] = useState<string[]>([]);
   const [selectedUf, setSelectedUf] = useState('');
-
   const [cities,setCities] = useState<string[]>([]);
-  const [selectedCities, setSelectedCities] = useState('');
 
   useEffect(()=>{
-      axios.get<IbgeUfResponse[]>('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+
+     axios.get<IbgeUfResponse[]>('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
       .then( response =>{
         const ufInitials = response.data.map( uf => uf.sigla);
-
-        // let ufsArray : any = [];
-
-        // ufInitials.map(uf =>(
-        //   ufsArray.push({
-        //     label:uf,
-        //     value:uf
-        //   })
-        // ))
-
-        // setUfs(ufsArray)
         setUfs(ufInitials)
-        // console.log(ufsArray);
       })
+
   },[]);
 
   useEffect(() =>{
@@ -91,14 +85,17 @@ function SignUp() {
       .then(response =>{
         const cityName = response.data.map( city => city.nome);
         setCities(cityName);
-        console.log(cityName)
       })
   },[selectedUf]);
 
+
   function handleSelect(ev:any){
-    const value = ev.target.value;
+    const value = ev.value;
     setSelectedUf(value);
-    console.log(value)
+  }
+
+  function handleSubmit(data:object):void{
+    console.log(data)
   }
 
   return (
@@ -112,15 +109,16 @@ function SignUp() {
       <Title>Cadastro</Title>
 
       <Content>
-        <Form onSubmit={()=>{}}>
+        <Form initialData={{}} onSubmit={handleSubmit}>
           <ContainerTypeUser>
             <SelectTypeUser>
               <Label>Selecione um tipo de usuário</Label>
-              <SelectOptions>
-                <option value='common'>Doador - possui algum animal ou encontrou um abandonado e deseja achar um novo lar para ele</option>
-                <option value='common'>Dono - se você perdeu seu pet e deseja cadastra-ló em nossa plataforma para encontra-lo.</option>
-                <option value='common'>ONG - Se é uma organização ou instituição que acolhe animais necessitados e deseja encontrar um novo lar para eles.</option>
-              </SelectOptions>
+              <Select
+                name='type'
+                placeholder='Selecione um tipo de usuário'
+                options={optionsTypeUser}
+                onchage={()=>{}}
+              />
 
               </SelectTypeUser>
 
@@ -152,22 +150,23 @@ function SignUp() {
             <DataUser>
               <Label>Némero de whatsapp</Label>
               <InputMask
+                name='whatsapp'
                 type='text'
-                name="whatsapp"
                 icon={FiPhone}
-                masks='(99) 9 9999-9999'
-                placeholder='(77) 99999-9999'
+                mask='(99)9 9999-9999'
+                placeholder='(77)9 9999-9999'
+
               />
             </DataUser>
 
             <DataUser>
               <Label>Número de telefone</Label>
               <InputMask
+                name='telephone'
                 type='text'
-                name="telephone"
                 icon={FiPhone}
-                masks='(99) 9 9999-9999'
-                placeholder='(77) 99999-9999'
+                mask='(99)9 9999-9999'
+                placeholder='(77)9 9999-9999'
               />
             </DataUser>
 
@@ -175,16 +174,11 @@ function SignUp() {
               <Label>Data de nascimento</Label>
               <InputMask
                 name="birthday"
+                type='text'
                 icon={FiCalendar}
-                masks='99/99/999'
+                mask='99/99/9999'
                 placeholder='dd/mm/aaaa'
               />
-              {/* <Input
-                name="birthday"
-
-                type="text"
-                placeholder="Ex.:(74)9 9999-2222"
-              /> */}
             </DataUser>
 
             <DataUser />
@@ -196,7 +190,13 @@ function SignUp() {
             <ContainerDataUserSelect>
               <DataUser>
                 <Label>UF</Label>
-                <SelectOptions
+                <Select
+                  name='uf'
+                  placeholder='Selecione sua UF'
+                  options={ufs.map(uf=>({label:uf,value:uf}))}
+                  onChange={handleSelect}
+                />
+                {/* <SelectOptions
                   onChange={handleSelect}
                   placeholder='selecione sua UF'
                 >
@@ -205,21 +205,15 @@ function SignUp() {
 
                     <option value={uf}>{uf}</option>
                   ))}
-                </SelectOptions>
+                </SelectOptions> */}
               </DataUser>
               <DataUser>
                 <Label>Cidade</Label>
-                <SelectOptions
-
-                  placeholder='selecione uma cidade'
-                >
-                  {/* <option value='0'>Selecione uma cidade</option> */}
-
-                  {cities.map(citie=>(
-
-                    <option value={citie}>{citie}</option>
-                  ))}
-                </SelectOptions>
+                <Select
+                  name='city'
+                  placeholder='Selecione sua cidade'
+                  options={cities.map(citie=>({label:citie,value:citie}))}
+                />
               </DataUser>
             </ContainerDataUserSelect>
 
@@ -228,8 +222,8 @@ function SignUp() {
               <Label>Lougradoro/Rua</Label>
               <Input
                 name="street"
-                icon={FiType}
                 type="text"
+                icon={FiType}
                 placeholder="Digite seu endereço"
               />
             </DataUser>
@@ -238,8 +232,8 @@ function SignUp() {
               <Label>Bairro</Label>
               <Input
                 name="distric"
-                icon={FiType}
                 type="text"
+                icon={FiType}
                 placeholder="Digite seu endereço"
               />
             </DataUser>
@@ -249,8 +243,8 @@ function SignUp() {
                 <Label>Número</Label>
                 <Input
                   name="addressNumber"
-                  icon={FiType}
                   type="text"
+                  icon={FiType}
                   placeholder="Ex.:Nº222"
                 />
               </DataUser>
@@ -258,10 +252,10 @@ function SignUp() {
               <DataUser>
                 <Label>CEP</Label>
                 <InputMask
-                  type='text'
                   name="postalCode"
+                  type='text'
                   icon={FiType}
-                  masks='99999-999'
+                  mask='99999-999'
                   placeholder='Ex: 9999999-999'
                 />
               </DataUser>
@@ -271,8 +265,8 @@ function SignUp() {
               <Label>Complemento (opcional)</Label>
               <Input
                 name="complement"
-                icon={FiType}
                 type="text"
+                icon={FiType}
                 placeholder="Ex.: Próximo ao mercado"
               />
             </DataUser>
@@ -284,8 +278,8 @@ function SignUp() {
               <Label>E-mail</Label>
               <Input
                 name="email"
-                icon={FiMail}
                 type="text"
+                icon={FiMail}
                 placeholder="Digite seu E-mail"
               />
             </DataUser>
@@ -294,8 +288,8 @@ function SignUp() {
               <Label>Confirmar E-mail</Label>
               <Input
                 name="confirmEmail"
-                icon={FiMail}
                 type="text"
+                icon={FiMail}
                 placeholder="Confirmar email"
               />
             </DataUser>
@@ -304,8 +298,8 @@ function SignUp() {
               <Label>Senha</Label>
               <Input
                 name="password"
-                icon={FiLock}
                 type="text"
+                icon={FiLock}
                 placeholder="Digite sua Senha"
               />
             </DataUser>
@@ -314,8 +308,8 @@ function SignUp() {
               <Label>Confirmar senha</Label>
               <Input
                 name="confirmPassword"
-                icon={FiLock}
                 type="text"
+                icon={FiLock}
                 placeholder="Confirma senha"
               />
             </DataUser>
@@ -381,7 +375,7 @@ function SignUp() {
 
             <ContainerButton>
               <ButtonFinsh>
-                <Button>
+                <Button type='submit'>
                   Finalizar
                 </Button>
               </ButtonFinsh>
