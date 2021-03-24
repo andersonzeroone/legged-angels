@@ -1,7 +1,6 @@
-import {useEffect, useState} from 'react';
+import {ChangeEvent, useEffect, useState} from 'react';
 import {Form} from '@unform/web';
 import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
-import {LatLng, latLng, LeafletMouseEvent, LocationEvent, map} from 'leaflet';
 import MakerIcon from '../../utils/mapIcon';
 import axios from 'axios';
 
@@ -58,7 +57,12 @@ interface IbgeCityResponse{
   nome:string;
 }
 
+
 function SignUp() {
+  let imgs = [
+    'https://res.cloudinary.com/stealthman22/image/upload/v1586308024/new-portfolio/hero/time-lapse-photography-of-waterfalls-during-sunset-210186.jpg',
+    'https://res.cloudinary.com/stealthman22/image/upload/v1586308023/new-portfolio/hero/two-cargo-ships-sailing-near-city-2144905.jpg',
+  ];
 
   const optionsTypeUser = [
     {value:'common', label:'Doador - possui algum animal ou encontrou um abandonado e deseja achar um novo lar para ele'},
@@ -69,6 +73,11 @@ function SignUp() {
   const [ufs, setUfs] = useState<string[]>([]);
   const [selectedUf, setSelectedUf] = useState('');
   const [cities,setCities] = useState<string[]>([]);
+
+  const [position, setPosition] = useState({lat:0,lng:0});
+
+  const [images, setImages] = useState<File[]>([]);
+  const [previewImages, setPreviewImages] = useState<string[]>([]);
 
   useEffect(()=>{
 
@@ -95,7 +104,54 @@ function SignUp() {
   }
 
   function handleSubmit(data:object):void{
-    console.log(data)
+    const {lat,lng} = position;
+    const photoProfile = previewImages[0];
+
+    const dataUser = {...data,logitude:lng,latitude:lat,photoProfile}
+    console.log(dataUser)
+
+  }
+
+  function LocationMarker() {
+
+    const map = useMapEvents({
+      click() {
+        map.locate()
+      },
+      locationfound(e:any) {
+        const{lat,lng} = e.latlng;
+        setPosition({
+          lat,
+          lng
+        })
+
+        map.flyTo(e.latlng, map.getZoom())
+      },
+    })
+
+    return position === null ? null : (
+      <Marker  icon={MakerIcon} position={position}>
+        <Popup>Localização salva</Popup>
+      </Marker>
+    )
+  }
+
+  function handleSelectImage(event: ChangeEvent<HTMLInputElement>){
+
+    if(!event.target.files){
+      return;
+    }
+
+    const selectImage = Array.from(event.target.files);
+    setImages(selectImage);
+    console.log(selectImage)
+
+    const selectImagesPreview = selectImage.map( image => {
+      return URL.createObjectURL(image);
+    });
+
+    setPreviewImages(selectImagesPreview);
+    console.log( typeof selectImagesPreview)
   }
 
   return (
@@ -318,23 +374,28 @@ function SignUp() {
             <DataUser />
 
             <ContainerAddPhotoProfile>
-              <ContainerPhotoProfile>
-                <PhotoProfile src={photo} />
+              {!previewImages[0] ?null : (
+                <ContainerPhotoProfile>
+                {previewImages.map(image =>(
+                  <PhotoProfile key={image} src={image}/>
+                ))}
 
-                <ButtonDeletePhotoProfile>
-                  <TextDeletePhotoProfile>Excluir</TextDeletePhotoProfile>
-                </ButtonDeletePhotoProfile>
-              </ContainerPhotoProfile>
+                  <ButtonDeletePhotoProfile>
+                    <TextDeletePhotoProfile>Excluir</TextDeletePhotoProfile>
+                  </ButtonDeletePhotoProfile>
+                </ContainerPhotoProfile>
+              )}
 
               <ButtonAddPhotoProfile htmlFor="image[]">
                 <FiPlus size={50} color="#15b6d6" />
               </ButtonAddPhotoProfile>
 
               <input
-                style={{ display: "none" }}
-                multiple
-                type="file"
                 id="image[]"
+                type="file"
+                multiple={false}
+                onChange={handleSelectImage}
+                style={{ display: "none" }}
               />
             </ContainerAddPhotoProfile>
 
@@ -361,14 +422,7 @@ function SignUp() {
                     // url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env}`}
                     // url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_ACCESS_TOKEN_MAP_BOX}`}
                   />
-                  <Marker
-                    icon={MakerIcon}
-                    position={[-11.2002747, -40.5228873]}
-                    >
-                    <Popup>
-                      A pretty CSS3 popup. <br /> Easily customizable.
-                    </Popup>
-                  </Marker>
+                  <LocationMarker/>
                 </MapContainer>
               </ContainerMap>
             </ContainerSelectPositionMapOngs>

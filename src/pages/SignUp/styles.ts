@@ -120,7 +120,7 @@ export const PhotoProfile = styled.img`
   border-radius:10px;
 `;
 
-export const ButtonDeletePhotoProfile = styled.a`
+export const ButtonDeletePhotoProfile = styled.button`
   margin-top:10px;
   cursor: pointer;
 `;
