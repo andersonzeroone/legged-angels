@@ -6,7 +6,7 @@ interface Props extends SelectProps<OptionTypeBase> {
   name: string;
 }
 
-import {ReactSelects} from './styles';
+import {Container,ReactSelects} from './styles';
 
 export default function Select({ name, ...rest }: Props) {
   const selectRef = useRef(null);
@@ -30,13 +30,15 @@ export default function Select({ name, ...rest }: Props) {
     });
   }, [fieldName, registerField, rest.isMulti]);
   return (
-
+    <Container>
       <ReactSelects
         defaultValue={defaultValue}
         ref={selectRef}
         classNamePrefix="react-select"
         {...rest}
       />
+      {error}
+    </Container>
 
   );
 };

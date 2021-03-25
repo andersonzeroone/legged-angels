@@ -1,9 +1,11 @@
-import {ChangeEvent, useCallback, useEffect, useState} from 'react';
+import {ChangeEvent, useCallback, useEffect, useState, useRef} from 'react';
 import {Form} from '@unform/web';
+import {FormHandles} from '@unform/core';
 import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
 import MakerIcon from '../../utils/mapIcon';
 import axios from 'axios';
 import *  as Yup from 'yup';
+import getValidationErrors from '../../utils/getValidationErrors';
 
 import {
   FiUser,
@@ -61,10 +63,14 @@ function SignUp() {
 
   const optionsTypeUser = [
     {value:'common', label:'Doador - possui algum animal ou encontrou um abandonado e deseja achar um novo lar para ele'},
-    {value:'common1', label:'Dono - se você perdeu seu pet e deseja cadastra-ló em nossa plataforma para encontra-lo.'},
+    {value:'common', label:'Dono - se você perdeu seu pet e deseja cadastra-ló em nossa plataforma para encontra-lo.'},
 
     {value:'ong', label:'ONG - Se é uma organização ou instituição que acolhe animais necessitados e deseja encontrar um novo lar para eles.'},
   ]
+
+  const formRef = useRef<FormHandles>(null);
+
+  console.log(formRef)
 
   const [ufs, setUfs] = useState<string[]>([]);
   const [selectedUf, setSelectedUf] = useState('');
@@ -113,6 +119,9 @@ function SignUp() {
 
 
     try{
+
+      formRef.current?.setErrors({});
+
       const schema= Yup.object().shape({
         type:Yup.string()
           .required('Por favor selecione um tipo de usuário'),
@@ -175,8 +184,13 @@ function SignUp() {
         abortEarly:false,
       })
 
+
+
     }catch(err){
       console.log(err);
+      const errors = getValidationErrors(err);
+
+      formRef.current?.setErrors(errors);
     }
   },[]);
 
@@ -228,7 +242,7 @@ function SignUp() {
       <Title>Cadastro</Title>
 
       <Content>
-        <Form initialData={{}} onSubmit={getData}>
+        <Form  ref={formRef} onSubmit={getData}>
           <ContainerTypeUser>
             <SelectTypeUser>
               <Label>Selecione um tipo de usuário</Label>

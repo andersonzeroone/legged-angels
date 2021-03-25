@@ -1,6 +1,10 @@
 import styled from'styled-components';
 import ReactSelect from 'react-select';
 
+export const Container = styled.div`
+
+`;
+
 export const ReactSelects = styled(ReactSelect)`
 
   .react-select__control{

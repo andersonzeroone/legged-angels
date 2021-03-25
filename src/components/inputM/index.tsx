@@ -55,6 +55,7 @@ function InputMasks({name,icon:Icon,...rest}:Props){
         defaultValue={defaultValue}
         {...rest}
       />
+      {error}
     </Container>
   )
 }

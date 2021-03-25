@@ -46,6 +46,7 @@ function Input({name,icon:Icon,...rest}:InputProps){
         {...rest}
         type="text"
       />
+      {error}
     </Container>
   )
 }
