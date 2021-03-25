@@ -1,8 +1,9 @@
-import {ChangeEvent, useEffect, useState} from 'react';
+import {ChangeEvent, useCallback, useEffect, useState} from 'react';
 import {Form} from '@unform/web';
 import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
 import MakerIcon from '../../utils/mapIcon';
 import axios from 'axios';
+import *  as Yup from 'yup';
 
 import {
   FiUser,
@@ -20,9 +21,6 @@ import Button from "../../components/button";
 import Input from "../../components/input";
 import InputMask from '../../components/inputM';
 import Select from '../../components/select'
-
-import photo from "../../assets/sign-in-background.jpg";
-
 
 import {
   Container,
@@ -49,6 +47,7 @@ import {
   ContainerButton,
   ButtonFinsh
 } from "./styles";
+import { latLng, LatLng } from 'leaflet';
 
 interface IbgeUfResponse{
   sigla:string;
@@ -59,14 +58,11 @@ interface IbgeCityResponse{
 
 
 function SignUp() {
-  let imgs = [
-    'https://res.cloudinary.com/stealthman22/image/upload/v1586308024/new-portfolio/hero/time-lapse-photography-of-waterfalls-during-sunset-210186.jpg',
-    'https://res.cloudinary.com/stealthman22/image/upload/v1586308023/new-portfolio/hero/two-cargo-ships-sailing-near-city-2144905.jpg',
-  ];
 
   const optionsTypeUser = [
     {value:'common', label:'Doador - possui algum animal ou encontrou um abandonado e deseja achar um novo lar para ele'},
     {value:'common1', label:'Dono - se você perdeu seu pet e deseja cadastra-ló em nossa plataforma para encontra-lo.'},
+
     {value:'ong', label:'ONG - Se é uma organização ou instituição que acolhe animais necessitados e deseja encontrar um novo lar para eles.'},
   ]
 
@@ -74,7 +70,7 @@ function SignUp() {
   const [selectedUf, setSelectedUf] = useState('');
   const [cities,setCities] = useState<string[]>([]);
 
-  const [position, setPosition] = useState({lat:0,lng:0});
+  const [position, setPosition] = useState({ lat:-11.2020652,lng:-40.521877});
 
   const [images, setImages] = useState<File[]>([]);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
@@ -103,37 +99,105 @@ function SignUp() {
     setSelectedUf(value);
   }
 
-  function handleSubmit(data:object):void{
+  function getData(data:object):void{
     const {lat,lng} = position;
     const photoProfile = previewImages[0];
 
     const dataUser = {...data,logitude:lng,latitude:lat,photoProfile}
     console.log(dataUser)
-
+    console.log(`foto no date `,previewImages)
+    handleSubmit(dataUser)
   }
 
-  function LocationMarker() {
+  const handleSubmit = useCallback(async(data:object)=>{
+
+
+    try{
+      const schema= Yup.object().shape({
+        type:Yup.string()
+          .required('Por favor selecione um tipo de usuário'),
+        name:Yup.string()
+          .required('Nome obrigatório'),
+        lastName:Yup.string()
+          .when('type',{
+            is:'common',
+            then:Yup.string()
+                      .required('Sobrenome obrigatório'),
+          }),
+        whatsapp:Yup.string()
+          .required(),
+        telephone:Yup.string()
+          .required(),
+        birthday:Yup.string()
+          .required('Data obrigatótia'),
+        uf:Yup.string()
+          .required('Uf obrigatória'),
+        city:Yup.string()
+          .required('Cidade obrigatória'),
+        street:Yup.string()
+          .when('type',{
+            is:'ong',
+            then:Yup.string()
+              .required('Lougradoro/Rua obrigatório'),
+          }),
+        distric:Yup.string()
+          .required('Bairro obrigatório'),
+        addressNumber:Yup.string()
+          .required('Número obrigatório'),
+        postalCode:Yup.string()
+          .required('Por favor informe seu CEP'),
+        complement:Yup.string(),
+        email:Yup.string()
+          .required('E-mail obrigatório')
+          .email('Digite um e-mail válido'),
+        confirmEmail:Yup.string()
+          .required('É preciso confirmar seu e-mail')
+          .email('Digite um e-mail válido'),
+        password:Yup.string()
+          .required('Senha obrigatória'),
+        confirmPassword:Yup.string()
+          .required('É preciso confirmar sua senha'),
+        photoProfile:Yup.string()
+          .when('type',{
+            is:'ong',
+            then:Yup.string()
+              .required('Por favor selecione adicione uma foto'),
+          }),
+        latitude:Yup.string()
+        .when('type',{
+          is:'ong',
+          then:Yup.string()
+            .required('Por favor click no mapa para selecionar sua posição'),
+        }),
+      });
+
+      await schema.validate(data,{
+        abortEarly:false,
+      })
+
+    }catch(err){
+      console.log(err);
+    }
+  },[]);
+
+  function LocationMarker(){
 
     const map = useMapEvents({
       click() {
         map.locate()
       },
       locationfound(e:any) {
-        const{lat,lng} = e.latlng;
-        setPosition({
-          lat,
-          lng
-        })
-
+        setPosition(e.latlng)
         map.flyTo(e.latlng, map.getZoom())
       },
-    })
+    });
 
     return position === null ? null : (
-      <Marker  icon={MakerIcon} position={position}>
-        <Popup>Localização salva</Popup>
+      <Marker icon={MakerIcon} position={position}>
+        <Popup>You are here</Popup>
       </Marker>
     )
+
   }
 
   function handleSelectImage(event: ChangeEvent<HTMLInputElement>){
@@ -144,14 +208,13 @@ function SignUp() {
 
     const selectImage = Array.from(event.target.files);
     setImages(selectImage);
-    console.log(selectImage)
 
     const selectImagesPreview = selectImage.map( image => {
       return URL.createObjectURL(image);
     });
 
     setPreviewImages(selectImagesPreview);
-    console.log( typeof selectImagesPreview)
+    console.log(selectImagesPreview[0])
   }
 
   return (
@@ -165,7 +228,7 @@ function SignUp() {
       <Title>Cadastro</Title>
 
       <Content>
-        <Form initialData={{}} onSubmit={handleSubmit}>
+        <Form initialData={{}} onSubmit={getData}>
           <ContainerTypeUser>
             <SelectTypeUser>
               <Label>Selecione um tipo de usuário</Label>
@@ -376,10 +439,7 @@ function SignUp() {
             <ContainerAddPhotoProfile>
               {!previewImages[0] ?null : (
                 <ContainerPhotoProfile>
-                {previewImages.map(image =>(
-                  <PhotoProfile key={image} src={image}/>
-                ))}
-
+                  <PhotoProfile src={previewImages[0]}/>
                   <ButtonDeletePhotoProfile>
                     <TextDeletePhotoProfile>Excluir</TextDeletePhotoProfile>
                   </ButtonDeletePhotoProfile>
@@ -404,9 +464,8 @@ function SignUp() {
                 Selecione a localização da sua ONG/intituição no mapa
               </TextSelectPositionsMapOngs>
 
-              <ContainerMap>
+              <ContainerMap id="mapid">
                 <MapContainer
-
                   center={[-11.2002747, -40.5228873]}
                   style={{
                     width: "80%",
