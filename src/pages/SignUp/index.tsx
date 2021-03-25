@@ -49,7 +49,6 @@ import {
   ContainerButton,
   ButtonFinsh
 } from "./styles";
-import { latLng, LatLng } from 'leaflet';
 
 interface IbgeUfResponse{
   sigla:string;
@@ -58,8 +57,8 @@ interface IbgeCityResponse{
   nome:string;
 }
 
-
-function SignUp() {
+const SignUp:React.FC =() =>{
+// function SignUp(){
 
   const optionsTypeUser = [
     {value:'common', label:'Doador - possui algum animal ou encontrou um abandonado e deseja achar um novo lar para ele'},
@@ -128,11 +127,7 @@ function SignUp() {
         name:Yup.string()
           .required('Nome obrigatório'),
         lastName:Yup.string()
-          .when('type',{
-            is:'common',
-            then:Yup.string()
-                      .required('Sobrenome obrigatório'),
-          }),
+          .required('Sobrenome obrigatório'),
         whatsapp:Yup.string()
           .required(),
         telephone:Yup.string()

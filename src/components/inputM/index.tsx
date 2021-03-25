@@ -3,7 +3,8 @@ import {IconBaseProps} from 'react-icons';
 import { useField } from '@unform/core';
 import ReactInputMask, { Props as InputProps } from 'react-input-mask';
 
-import { Container } from './styles';
+import { Container,Error } from './styles';
+import { FiAlertCircle } from 'react-icons/fi';
 interface Props extends InputProps {
   name: string;
   icon?:React.ComponentType<IconBaseProps>;
@@ -46,7 +47,7 @@ function InputMasks({name,icon:Icon,...rest}:Props){
   },[])
 
   return(
-    <Container isField={isField} isFocused={isFocused}>
+    <Container isErrored={!!error} isField={isField} isFocused={isFocused}>
       {Icon && <Icon size={20} style={{marginTop:-2}}/>}
       <ReactInputMask
         onFocus={handleInputFocus}
@@ -55,7 +56,11 @@ function InputMasks({name,icon:Icon,...rest}:Props){
         defaultValue={defaultValue}
         {...rest}
       />
-      {error}
+      {error && (
+        <Error>
+          <FiAlertCircle color='#c53030' size={20}/>
+        </Error>
+      )}
     </Container>
   )
 }
