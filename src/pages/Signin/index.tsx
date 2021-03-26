@@ -4,7 +4,7 @@ import { FormHandles } from '@unform/core';
 import {FiLogIn, FiMail, FiLock, FiArrowLeft} from 'react-icons/fi';
 import {Form} from '@unform/web';
 import *  as Yup from 'yup';
-import{AuthContext, useAuth} from '../../hooks/AuthContext';
+import{ useAuth} from '../../hooks/AuthContext';
 
 import Button from '../../components/button';
 import Input from '../../components/input';
@@ -28,9 +28,7 @@ interface SignInprops{
 
 function Signin(){
   const formRef = useRef<FormHandles>(null);
-
   const {signIn}= useAuth();
-  console.log(signIn);
 
   const handleSubmit = useCallback(async(data:SignInprops)=>{
     try{

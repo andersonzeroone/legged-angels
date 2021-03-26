@@ -1,6 +1,6 @@
 import React,{createContext, useCallback, useContext, useState}  from 'react';
 import api from '../services/api';
-
+import {useHistory} from 'react-router-dom';
 interface AuthState{
   token:string;
   user:object;
@@ -22,6 +22,9 @@ export const  AuthContext = createContext<AuthContextData>(
 );
 
 export const AuthProvider:React.FC =({children}) =>{
+
+  const history = useHistory();
+
   const [data, setData] = useState<AuthState>(()=>{
     const token = localStorage.getItem('@legged-angels:token');
     const user = localStorage.getItem('@legged-angels:user');
@@ -41,6 +44,10 @@ export const AuthProvider:React.FC =({children}) =>{
     });
 
     const {token, user} = response.data;
+
+    if(token){
+      history.push('/home')
+    }
 
     localStorage.setItem('@legged-angels:token',token);
     localStorage.setItem('@legged-angels:user',user);

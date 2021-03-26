@@ -3,10 +3,12 @@ import {Link} from 'react-router-dom';
 import {Form} from '@unform/web';
 import {FormHandles} from '@unform/core';
 import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
-import MakerIcon from '../../utils/mapIcon';
+import {useHistory} from 'react-router-dom';
 import axios from 'axios';
 import *  as Yup from 'yup';
+
 import getValidationErrors from '../../utils/getValidationErrors';
+import MakerIcon from '../../utils/mapIcon';
 import api from '../../services/api';
 import {
   FiUser,
@@ -83,6 +85,7 @@ interface SignUpFormData{
 
 const SignUp:React.FC =() =>{
 // function SignUp(){
+  const history = useHistory();
 
   const optionsTypeUser = [
     {value:'common', label:'Doador - possui algum animal ou encontrou um abandonado e deseja achar um novo lar para ele'},
@@ -228,6 +231,11 @@ const SignUp:React.FC =() =>{
 
       const response = await api.post('/v1/user/register',dataUser);
 
+      const {token} = response.data;
+
+      if(token){
+        history.push('/home')
+      }
       console.log(response.data);
 
       console.log('aqui')
@@ -235,9 +243,9 @@ const SignUp:React.FC =() =>{
     }catch(err){
       console.log(err.response.data)
 
-      // const errors = getValidationErrors(err);
+      const errors = getValidationErrors(err);
 
-      // formRef.current?.setErrors(errors);
+      formRef.current?.setErrors(errors);
     }
   },[]);
 
