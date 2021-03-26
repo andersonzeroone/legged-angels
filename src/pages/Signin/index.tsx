@@ -1,13 +1,61 @@
+import { useRef , useCallback} from 'react';
+import {Link} from 'react-router-dom';
+import { FormHandles } from '@unform/core';
 import {FiLogIn, FiMail, FiLock, FiArrowLeft} from 'react-icons/fi';
-
-import { Container,Content,Background , Header} from './styles';
+import {Form} from '@unform/web';
+import *  as Yup from 'yup';
+import{AuthContext, useAuth} from '../../hooks/AuthContext';
 
 import Button from '../../components/button';
 import Input from '../../components/input';
 
 import logoImg from '../../assets/logo1.png';
+import getValidationErrors from '../../utils/getValidationErrors';
+
+import { Container,Content,Background , Header} from './styles';
+
+interface SignInprops{
+  email:string
+  password:string
+}
 
 function Signin(){
+  const formRef = useRef<FormHandles>(null);
+
+  const {signIn}= useAuth();
+  console.log(signIn);
+
+  const handleSubmit = useCallback(async(data:SignInprops)=>{
+    try{
+
+      formRef.current?.setErrors({});
+
+      const schema= Yup.object().shape({
+        email:Yup.string()
+          .required('E-mail obrigatório')
+          .email('Digite um e-mail válido'),
+
+        password:Yup.string()
+          .required('Senha obrigatória'),
+      });
+
+      await schema.validate(data,{
+        abortEarly:false,
+      });
+
+      signIn({
+        email:data.email,
+        password:data.password
+      });
+
+    }catch(err){
+      console.log(err);
+      const errors = getValidationErrors(err);
+
+      formRef.current?.setErrors(errors);
+    }
+  },[])
+
   return(
     <Container>
       <Content>
@@ -19,7 +67,7 @@ function Signin(){
         </Header>
         <img src={logoImg} alt='Anjos de patas'/>
 
-        <form action="">
+        <Form ref={formRef} onSubmit={handleSubmit}>
           <h1>Faça seu logon</h1>
 
           <Input
@@ -38,12 +86,12 @@ function Signin(){
           <Button type='submit' >Entrar</Button>
 
           <a href="forgot">Esqueci minha senha.</a>
-        </form>
+        </Form>
 
-          <a href="">
+          <Link to='/signup'>
             <FiLogIn/>
-            Criar conta!
-          </a>
+            Crir conta!
+          </Link>
       </Content>
       <Background></Background>
     </Container>

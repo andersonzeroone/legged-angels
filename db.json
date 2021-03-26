@@ -1,0 +1,31 @@
+{
+  "register": [
+    {
+      "id": 1,
+      "name": "Anderson",
+      "lastName": "Pablo",
+      "telephone": "(74)9 9999-000",
+      "whatsapp": "(74) 9 9999-0000",
+      "email": "a@gmail.com",
+      "password": "12345678",
+      "type": "ong",
+      "uf": "BA",
+      "city": "Jacobina",
+      "street": "Rua A",
+      "district": "Bairro B",
+      "postalCode": "44700-000",
+      "addressNumber": "12",
+      "complement": "sadasdasd"
+    },
+    {
+      "email": "a@gmail.com",
+      "password": "12345678",
+      "id": 2
+    },
+    {
+      "email": "a@gmail.com",
+      "password": "1234545",
+      "id": 3
+    }
+  ]
+}

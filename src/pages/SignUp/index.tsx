@@ -1,4 +1,5 @@
 import {ChangeEvent, useCallback, useEffect, useState, useRef} from 'react';
+import {Link} from 'react-router-dom';
 import {Form} from '@unform/web';
 import {FormHandles} from '@unform/core';
 import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
@@ -115,8 +116,6 @@ const SignUp:React.FC =() =>{
   }
 
   const handleSubmit = useCallback(async(data:object)=>{
-
-
     try{
 
       formRef.current?.setErrors({});
@@ -229,10 +228,10 @@ const SignUp:React.FC =() =>{
   return (
     <Container>
       <Header>
-        <a href="">
+        <Link to='/'>
           <FiArrowLeft style={{ marginRight: 5 }} />
           Voltar
-        </a>
+        </Link>
       </Header>
       <Title>Cadastro</Title>
 
