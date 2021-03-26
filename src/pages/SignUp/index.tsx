@@ -7,7 +7,7 @@ import MakerIcon from '../../utils/mapIcon';
 import axios from 'axios';
 import *  as Yup from 'yup';
 import getValidationErrors from '../../utils/getValidationErrors';
-
+import api from '../../services/api';
 import {
   FiUser,
   FiPhone,
@@ -58,19 +58,41 @@ interface IbgeCityResponse{
   nome:string;
 }
 
+interface SignUpFormData{
+  type:string;
+  name:string;
+  lastName:string;
+  whatsapp?:string;
+  telephone?:string;
+  birthday?:string;
+  uf:string;
+  city:string;
+  street:string;
+  distric:string;
+  addressNumber?:string;
+  postalCode:string;
+  complement?:string;
+  email:string;
+  confirmEmail:string;
+  password:string;
+  confirmPassword:string;
+  photoProfile?:string;
+  latitude?:string;
+  logitude?:string;
+}
+
 const SignUp:React.FC =() =>{
 // function SignUp(){
 
   const optionsTypeUser = [
     {value:'common', label:'Doador - possui algum animal ou encontrou um abandonado e deseja achar um novo lar para ele'},
     {value:'common', label:'Dono - se você perdeu seu pet e deseja cadastra-ló em nossa plataforma para encontra-lo.'},
-
     {value:'ong', label:'ONG - Se é uma organização ou instituição que acolhe animais necessitados e deseja encontrar um novo lar para eles.'},
   ]
 
   const formRef = useRef<FormHandles>(null);
 
-  console.log(formRef)
+  // console.log(formRef)
 
   const [ufs, setUfs] = useState<string[]>([]);
   const [selectedUf, setSelectedUf] = useState('');
@@ -105,17 +127,17 @@ const SignUp:React.FC =() =>{
     setSelectedUf(value);
   }
 
-  function getData(data:object):void{
+  function getData(data:any):void{
     const {lat,lng} = position;
     const photoProfile = previewImages[0];
 
-    const dataUser = {...data,logitude:lng,latitude:lat,photoProfile}
+    const dataUser = {...data,logitude:lng.toString(),latitude:lat.toString(),photoProfile}
     console.log(dataUser)
     console.log(`foto no date `,previewImages)
     handleSubmit(dataUser)
   }
 
-  const handleSubmit = useCallback(async(data:object)=>{
+  const handleSubmit = useCallback(async(data:SignUpFormData)=>{
     try{
 
       formRef.current?.setErrors({});
@@ -178,13 +200,44 @@ const SignUp:React.FC =() =>{
         abortEarly:false,
       })
 
+      const dataUser = new FormData();
 
+      dataUser.append('type',data.type)
+      dataUser.append('name',data.name)
+      dataUser.append('lastName',(data.lastName??''))
+      dataUser.append('whatsapp',(data.whatsapp??''))
+      dataUser.append('telephone',(data.telephone??''))
+      dataUser.append('birthday',(data.birthday??''))
+      dataUser.append('uf',data.uf)
+      dataUser.append('city',data.city)
+      dataUser.append('street',data.street)
+      dataUser.append('district',data.distric)
+      dataUser.append('addressNumber',(data.addressNumber??''))
+      dataUser.append('postalCode',data.postalCode)
+      dataUser.append('complement',(data.complement??''))
+      dataUser.append('email',data.email)
+      dataUser.append('confirmEmail',data.confirmEmail)
+      dataUser.append('password',data.password)
+      dataUser.append('confirmPassword',data.confirmPassword)
+      dataUser.append('latitude',data.latitude??'')
+      dataUser.append('longitude',data.logitude??'')
+
+      images.forEach(photoProfile =>{
+        dataUser.append('photoProfile',photoProfile)
+      })
+
+      const response = await api.post('/v1/user/register',dataUser);
+
+      console.log(response.data);
+
+      console.log('aqui')
 
     }catch(err){
-      console.log(err);
-      const errors = getValidationErrors(err);
+      console.log(err.response.data)
 
-      formRef.current?.setErrors(errors);
+      // const errors = getValidationErrors(err);
+
+      // formRef.current?.setErrors(errors);
     }
   },[]);
 
@@ -216,6 +269,7 @@ const SignUp:React.FC =() =>{
 
     const selectImage = Array.from(event.target.files);
     setImages(selectImage);
+    console.log(selectImage[0]);
 
     const selectImagesPreview = selectImage.map( image => {
       return URL.createObjectURL(image);
@@ -280,8 +334,8 @@ const SignUp:React.FC =() =>{
                 name='whatsapp'
                 type='text'
                 icon={FiPhone}
-                mask='(99)9 9999-9999'
-                placeholder='(77)9 9999-9999'
+                mask='(99) 9 9999-9999'
+                placeholder='(77) 9 9999-9999'
 
               />
             </DataUser>
@@ -292,8 +346,8 @@ const SignUp:React.FC =() =>{
                 name='telephone'
                 type='text'
                 icon={FiPhone}
-                mask='(99)9 9999-9999'
-                placeholder='(77)9 9999-9999'
+                mask='(99) 9 9999-9999'
+                placeholder='(77) 9 9999-9999'
               />
             </DataUser>
 
