@@ -9,9 +9,10 @@ import { Container, Error } from './styles';
 interface InputProps extends InputHTMLAttributes<HTMLInputElement>{
   name:string;
   icon:React.ComponentType<IconBaseProps>;
+  typeMask?:string;
 }
 
-function Input({name,icon:Icon,...rest}:InputProps){
+function Input({name,icon:Icon,typeMask,...rest}:InputProps){
 
   const [isFocused, setIsFocused] = useState(false);
   const [isField, setIsField] = useState(false);
@@ -38,7 +39,7 @@ function Input({name,icon:Icon,...rest}:InputProps){
   },[])
 
   return(
-    <Container isErrored={!!error} isField={isField} isFocused={isFocused}>
+    <Container isErrored={!!error} isField={isField} isFocused={isFocused} typeMask={typeMask}>
       {Icon && <Icon size={20} style={{marginTop:-2}}/>}
       <input
         onFocus={handleInputFocus}

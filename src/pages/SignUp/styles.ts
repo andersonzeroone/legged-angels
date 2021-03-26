@@ -38,7 +38,7 @@ export const Title = styled.h1`
 
 export const Content = styled.div`
   background: #FFFFFF;
-  width:60%;
+  width:70%;
   margin-top:30px;
   border-radius:15px;
   padding:0px 20px 80px 20px;
@@ -52,8 +52,8 @@ export const SubTitle = styled.h1`
 
 export const ContainerTypeUser = styled.div`
   display:flex;
-  margin-top:40px;
   width:100%;
+  padding-top:40px;
 `;
 
 export const SelectTypeUser = styled.div`
@@ -71,8 +71,13 @@ export const ContainerDataUser = styled.div`
 `;
 
 export const DataUser = styled.div`
-  width:42%;
+  width:45%;
   margin-top:40px;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:center;
+
 `;
 
 export const Label = styled.p`
@@ -92,16 +97,15 @@ export const ContainerDataUserSelect = styled.div`
 export const DataUserNumberCep = styled.div`
   display:flex;
   justify-content:space-between;
-  width:40%;
+  width:45%;
 `;
 
 
 export const ContainerAddPhotoProfile = styled.div`
   display:flex;
-  /* width:25%; */
-  justify-content: space-between;
-
+  width:100%;
   margin-top:30px;
+
 `;
 
 

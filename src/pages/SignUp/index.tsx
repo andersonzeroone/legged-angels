@@ -100,6 +100,7 @@ const SignUp:React.FC =() =>{
   const [ufs, setUfs] = useState<string[]>([]);
   const [selectedUf, setSelectedUf] = useState('');
   const [cities,setCities] = useState<string[]>([]);
+  const [typeUser,setTypeUser] = useState(false);
 
   const [position, setPosition] = useState({ lat:-11.2020652,lng:-40.521877});
 
@@ -124,9 +125,17 @@ const SignUp:React.FC =() =>{
       })
   },[selectedUf]);
 
+  function handleSeletctType(ev:any){
+    const value = ev.value;
+    console.log(value)
+    if(value === 'ong'){
+      setTypeUser(true);
+    }
+  }
 
   function handleSelect(ev:any){
     const value = ev.value;
+    console.log(value)
     setSelectedUf(value);
   }
 
@@ -241,7 +250,7 @@ const SignUp:React.FC =() =>{
       console.log('aqui')
 
     }catch(err){
-      console.log(err.response.data)
+      // console.log(err.response.data)
 
       const errors = getValidationErrors(err);
 
@@ -306,7 +315,7 @@ const SignUp:React.FC =() =>{
                 name='type'
                 placeholder='Selecione um tipo de usuário'
                 options={optionsTypeUser}
-                onchage={()=>{}}
+                onChange={handleSeletctType}
               />
 
               </SelectTypeUser>
@@ -326,21 +335,27 @@ const SignUp:React.FC =() =>{
               />
             </DataUser>
 
-            <DataUser>
-              <Label>Sobrenome</Label>
-              <Input
-                name="lastName"
-                icon={FiUser}
-                type="text"
-                placeholder="Digite seu sobre nome"
-              />
-            </DataUser>
+            {!typeUser?(
+              <DataUser>
+                <Label>Sobrenome</Label>
+                  <Input
+                    name="lastName"
+                    icon={FiUser}
+                    type="text"
+                    placeholder="Digite seu sobre nome"
+                  />
+                </DataUser>
+
+                ):<DataUser/>
+              }
+
 
             <DataUser>
               <Label>Némero de whatsapp</Label>
               <InputMask
                 name='whatsapp'
                 type='text'
+                typeMaks='phone'
                 icon={FiPhone}
                 mask='(99) 9 9999-9999'
                 placeholder='(77) 9 9999-9999'
@@ -353,6 +368,7 @@ const SignUp:React.FC =() =>{
               <InputMask
                 name='telephone'
                 type='text'
+                typeMaks='phone'
                 icon={FiPhone}
                 mask='(99) 9 9999-9999'
                 placeholder='(77) 9 9999-9999'
@@ -360,10 +376,12 @@ const SignUp:React.FC =() =>{
             </DataUser>
 
             <DataUser>
-              <Label>Data de nascimento</Label>
+            {!typeUser?(<Label>Data de nascimento</Label>):<Label>Data oficial de criação</Label>}
+
               <InputMask
                 name="birthday"
                 type='text'
+                typeMaks='date'
                 icon={FiCalendar}
                 mask='99/99/9999'
                 placeholder='dd/mm/aaaa'
@@ -434,6 +452,7 @@ const SignUp:React.FC =() =>{
                   name="addressNumber"
                   type="text"
                   icon={FiType}
+                  typeMask={'addressNumber'}
                   placeholder="Ex.:Nº222"
                 />
               </DataUser>
@@ -443,6 +462,7 @@ const SignUp:React.FC =() =>{
                 <InputMask
                   name="postalCode"
                   type='text'
+                  typeMaks='cep'
                   icon={FiType}
                   mask='99999-999'
                   placeholder='Ex: 9999999-999'
@@ -504,7 +524,6 @@ const SignUp:React.FC =() =>{
             </DataUser>
 
             <SubTitle>Adicionar foto do perfil:</SubTitle>
-            <DataUser />
 
             <ContainerAddPhotoProfile>
               {!previewImages[0] ?null : (
@@ -528,10 +547,10 @@ const SignUp:React.FC =() =>{
                 style={{ display: "none" }}
               />
             </ContainerAddPhotoProfile>
-
-            <ContainerSelectPositionMapOngs>
+            {!typeUser?(null):(
+              <ContainerSelectPositionMapOngs>
               <TextSelectPositionsMapOngs>
-                Selecione a localização da sua ONG/intituição no mapa
+                Clique no mapa para marcar a localização da sua ONG/intituição no mapa
               </TextSelectPositionsMapOngs>
 
               <ContainerMap id="mapid">
@@ -555,6 +574,8 @@ const SignUp:React.FC =() =>{
                 </MapContainer>
               </ContainerMap>
             </ContainerSelectPositionMapOngs>
+            )}
+
 
             <ContainerButton>
               <ButtonFinsh>

@@ -99,7 +99,7 @@ function Signin(){
 
           <Link to='/signup'>
             <FiLogIn/>
-            Crir conta!
+            Criar conta!
           </Link>
         </AnimationContainer>
       </Content>

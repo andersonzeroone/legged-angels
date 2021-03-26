@@ -4,6 +4,7 @@ interface ContainerProps{
   isFocused:boolean;
   isField:boolean;
   isErrored:boolean;
+  typeMask?:string;
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -30,6 +31,13 @@ export const Container = styled.div<ContainerProps>`
   }
 
   ${(props)=>
+      props.typeMask === 'addressNumber' &&
+        css`
+          width:75%;
+        `
+    }
+
+  ${(props)=>
       props.isErrored &&
         css`
           border:2px solid #c53030;
@@ -52,6 +60,13 @@ export const Container = styled.div<ContainerProps>`
 
     &::placeholder{
       color:#596C83;
+    }
+
+    ${(props)=>
+      props.typeMask === 'addressNumber' &&
+        css`
+          width:70%;
+        `
     }
   }
 

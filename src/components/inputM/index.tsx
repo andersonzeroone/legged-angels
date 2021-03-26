@@ -8,12 +8,12 @@ import { FiAlertCircle } from 'react-icons/fi';
 interface Props extends InputProps {
   name: string;
   icon?:React.ComponentType<IconBaseProps>;
-
+  typeMaks?:string;
 }
 
 type RefProps = InputHTMLAttributes<HTMLInputElement>
 
-function InputMasks({name,icon:Icon,...rest}:Props){
+function InputMasks({name,icon:Icon,typeMaks,...rest}:Props){
 
   const [isFocused, setIsFocused] = useState(false);
   const [isField, setIsField] = useState(false);
@@ -47,8 +47,8 @@ function InputMasks({name,icon:Icon,...rest}:Props){
   },[])
 
   return(
-    <Container isErrored={!!error} isField={isField} isFocused={isFocused}>
-      {Icon && <Icon size={20} style={{marginTop:-2}}/>}
+    <Container isErrored={!!error} isField={isField} isFocused={isFocused} typeMaks={typeMaks}>
+      {Icon && <Icon size={20} />}
       <ReactInputMask
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
@@ -56,6 +56,7 @@ function InputMasks({name,icon:Icon,...rest}:Props){
         defaultValue={defaultValue}
         {...rest}
       />
+
       {error && (
         <Error>
           <FiAlertCircle color='#c53030' size={20}/>

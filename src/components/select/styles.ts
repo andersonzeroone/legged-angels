@@ -2,7 +2,7 @@ import styled from'styled-components';
 import ReactSelect from 'react-select';
 
 export const Container = styled.div`
-
+  width:90%;
 `;
 
 export const ReactSelects = styled(ReactSelect)`

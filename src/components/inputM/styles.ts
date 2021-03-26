@@ -3,6 +3,7 @@ interface ContainerProps{
   isFocused:boolean;
   isField:boolean;
   isErrored:boolean;
+  typeMaks?:string;
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -12,10 +13,32 @@ export const Container = styled.div<ContainerProps>`
   padding:16px;
   width:100%;
 
+  ${(props)=>
+    props.typeMaks ==='date' &&
+      css`
+        width:40%;
+      `
+  }
+
+  ${(props)=>
+      props.typeMaks ==='phone' &&
+        css`
+          width:45%;
+        `
+    }
+
+  ${(props)=>
+      props.typeMaks ==='cep' &&
+        css`
+          width:80%;
+          `
+    }
+
+
   color:#596C83;
 
   display:flex;
-  /* align-items:center; */
+  align-items:center;
 
   & + div{
     margin-top:18px;
@@ -29,18 +52,41 @@ export const Container = styled.div<ContainerProps>`
       `
   }
 
-${(props)=>
-      props.isErrored &&
-        css`
-          border:2px solid #c53030;
-        `
+  ${(props)=>
+    props.isErrored &&
+      css`
+        border:2px solid #c53030;
+      `
     }
 
   input{
     flex:1;
+    flex-direction:row;
+    align-items:center;
     padding:1px;
     background:transparent;
     border:0;
+
+    ${(props)=>
+      props.typeMaks ==='date' &&
+        css`
+          width:50%;
+      `
+    }
+
+    ${(props)=>
+      props.typeMaks ==='phone' &&
+        css`
+          width:55%;
+        `
+    }
+
+    ${(props)=>
+        props.typeMaks ==='cep' &&
+          css`
+            width:40%;
+            `
+      }
 
     color:#596C83;
 
