@@ -12,7 +12,14 @@ import Input from '../../components/input';
 import logoImg from '../../assets/logo1.png';
 import getValidationErrors from '../../utils/getValidationErrors';
 
-import { Container,Content,Background , Header} from './styles';
+import {
+  Container,
+  Content,Background,
+  Header,
+  AnimationContainer,
+  ButtonBack,
+  ForgotPassword
+} from './styles';
 
 interface SignInprops{
   email:string
@@ -60,38 +67,43 @@ function Signin(){
     <Container>
       <Content>
         <Header>
-          <a href="">
+          <ButtonBack to='/'>
             <FiArrowLeft style={{marginRight:5}}/>
             Voltar
-          </a>
+          </ButtonBack>
         </Header>
-        <img src={logoImg} alt='Anjos de patas'/>
+        <AnimationContainer>
 
-        <Form ref={formRef} onSubmit={handleSubmit}>
-          <h1>Faça seu logon</h1>
+          <img src={logoImg} alt='Anjos de patas'/>
 
-          <Input
-            name='email'
-            icon={FiMail}
-            type="text"
-             placeholder='Email'
-          />
-          <Input
-            name='password'
-            icon={FiLock}
-            type="password"
-            placeholder='Senha'
-          />
+          <Form ref={formRef} onSubmit={handleSubmit}>
+            <h1>Faça seu logon</h1>
 
-          <Button type='submit' >Entrar</Button>
+            <Input
+              name='email'
+              icon={FiMail}
+              type="text"
+              placeholder='Email'
+            />
+            <Input
+              name='password'
+              icon={FiLock}
+              type="password"
+              placeholder='Senha'
+            />
 
-          <a href="forgot">Esqueci minha senha.</a>
-        </Form>
+            <Button type='submit' >Entrar</Button>
+
+            <ForgotPassword to='/'>
+              Esqueci minha senha.
+            </ForgotPassword>
+          </Form>
 
           <Link to='/signup'>
             <FiLogIn/>
             Crir conta!
           </Link>
+        </AnimationContainer>
       </Content>
       <Background></Background>
     </Container>
