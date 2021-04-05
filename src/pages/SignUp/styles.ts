@@ -6,7 +6,6 @@ export const Container = styled.div`
   flex:1;
   flex-direction:column;
   align-items:center;
-
   /* height:100vh; */
   padding:20px;
   /* background: #000; */
@@ -18,7 +17,6 @@ export const Header = styled.div`
   display:flex;
   align-items:center;
   width:100%;
-
   a{
     display: flex;
     justify-content:center;
@@ -66,7 +64,6 @@ export const ContainerDataUser = styled.div`
   display:flex;
   justify-content:space-between;
   flex-wrap:wrap;
-
   margin-top:-20px;
 `;
 
@@ -77,7 +74,6 @@ export const DataUser = styled.div`
   flex-direction:column;
   align-items:flex-start;
   justify-content:center;
-
 `;
 
 export const Label = styled.p`
@@ -105,7 +101,6 @@ export const ContainerAddPhotoProfile = styled.div`
   display:flex;
   width:100%;
   margin-top:30px;
-
 `;
 
 
@@ -120,7 +115,6 @@ export const ContainerPhotoProfile = styled.div`
 export const PhotoProfile = styled.img`
   height:6rem;
   width:6rem;
-
   border-radius:10px;
 `;
 
@@ -131,25 +125,20 @@ export const ButtonDeletePhotoProfile = styled.button`
 
 
 export const TextDeletePhotoProfile = styled.a`
-
 `;
 
 export const ButtonAddPhotoProfile = styled.label`
   /* width:30%; */
   height:6rem;
   width:6rem;
-
   display:flex;
   align-items:center;
   justify-content:center;
-
   border: 3px dashed #96D2F0;
   border-radius: 20px;
   cursor: pointer;
-
   padding:5px;
   margin-left:20px;
-
 `;
 
 export const ContainerSelectPositionMapOngs = styled.div`
@@ -158,7 +147,6 @@ export const ContainerSelectPositionMapOngs = styled.div`
   flex-direction:column;
   align-items:center;
   justify-content:center;
-
   margin-top:100px;
 `;
 
@@ -170,14 +158,11 @@ export const TextSelectPositionsMapOngs = styled.p`
 
 export const ContainerMap = styled.div`
   margin-top:20px;
-
   width: 100%;
   height:100%;
-
   display:flex;
   align-items:center;
   justify-content:center;
-
 `;
 
 export const ContainerButton = styled.div`
@@ -185,7 +170,6 @@ export const ContainerButton = styled.div`
   width:100%;
   align-items:center;
   justify-content:center;
-
   margin-top:80px;
 `;
 
@@ -193,5 +177,3 @@ export const ContainerButton = styled.div`
 export const ButtonFinsh = styled.div`
   width:60%;
 `;
-
-

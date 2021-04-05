@@ -7,7 +7,6 @@ import signinBackgroundImg from '../../assets/sign-in-background.jpg';
 
 export const  Container = styled.div`
   height:100vh;
-
   display:flex;
   align-items:stretch;
 `
@@ -16,16 +15,12 @@ export const  Content = styled.div`
   flex:1;
   background:url(${fundoSvg}) no-repeat center;
   background-size:cover;
-
   display:flex;
   flex-direction:column;
   align-items:center;
-
   place-content:center;
-
   width:100%;
   max-width:700px;
-
 `;
 
 const appearFromLeft = keyframes`
@@ -43,41 +38,32 @@ export const AnimationContainer = styled.div`
   flex-direction:column;
   align-items:center;
   place-content:center;
-
   animation:${appearFromLeft} 1s;
-
   img{
     height:10rem;
   }
-
   form{
     margin:80px 0;
     width:340px;
     text-align:center;
-
     h1{
       margin-bottom:24px;
       color:#225E73;
       font-family:'Francois One', serif;
       /* margin-top:-10%; */
     }
-
   }
-
   > a{
       color:#5390A6;
       display:block;
-
       margin-top:-40px;
       font-weight:bold;
       text-decoration:none;
       transition: color 0.2s;
       display:flex;
-
       svg{
         margin-right:5px;
       }
-
       &:hover{
         color:${shade(0.2, '#5390A6')}
       }
@@ -97,7 +83,6 @@ export const ForgotPassword = styled(Link)`
   display:block;
   text-decoration:none;
   transition: color 0.2s;
-
   &:hover{
     color:${shade(0.2, '#5390A6')}
   }

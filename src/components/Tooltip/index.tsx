@@ -1,4 +1,3 @@
-import { Children, ReactChildren } from 'react';
 import { Container } from './styles';
 
 interface TooltipPros{

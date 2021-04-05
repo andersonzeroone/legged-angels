@@ -12,6 +12,7 @@ export const ReactSelects = styled(ReactSelect)`
     border-radius:15px;
     /* border:1px solid #CC9E1F; */
     padding:8px;
+    margin-right:5px;
   }
 
   .css-1pahdxg-control{

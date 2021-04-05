@@ -1,4 +1,4 @@
-import { InputHTMLAttributes,useRef, useEffect, useCallback, useState} from 'react';
+import { useRef, useEffect, useCallback, useState} from 'react';
 import {IconBaseProps} from 'react-icons';
 import { useField } from '@unform/core';
 import ReactInputMask, { Props as InputProps } from 'react-input-mask';
@@ -10,8 +10,6 @@ interface Props extends InputProps {
   icon?:React.ComponentType<IconBaseProps>;
   typeMaks?:string;
 }
-
-type RefProps = InputHTMLAttributes<HTMLInputElement>
 
 function InputMasks({name,icon:Icon,typeMaks,...rest}:Props){
 

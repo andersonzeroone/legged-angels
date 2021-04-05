@@ -50,12 +50,12 @@ export const AuthProvider:React.FC =({children}) =>{
     }
 
     localStorage.setItem('@legged-angels:token',token);
-    localStorage.setItem('@legged-angels:user',user);
+    localStorage.setItem('@legged-angels:user',JSON.stringify(user));
 
     setData({token, user});
 
     console.log(response.data);
-  },[]);
+  },[history]);
 
   const signOut = useCallback(()=>{
     localStorage.removeItem('@legged-angels:token');

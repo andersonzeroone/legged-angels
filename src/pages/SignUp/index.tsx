@@ -13,7 +13,6 @@ import api from '../../services/api';
 import {
   FiUser,
   FiPhone,
-  FiMapPin,
   FiMail,
   FiLock,
   FiArrowLeft,
@@ -256,7 +255,7 @@ const SignUp:React.FC =() =>{
 
       formRef.current?.setErrors(errors);
     }
-  },[]);
+  },[images,history]);
 
   function LocationMarker(){
 

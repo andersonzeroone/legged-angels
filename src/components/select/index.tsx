@@ -1,6 +1,6 @@
 import React, { useRef, useEffect} from 'react';
 import { useField } from '@unform/core';
-import ReactSelect, { OptionTypeBase, Props as SelectProps,} from 'react-select';
+import { OptionTypeBase, Props as SelectProps,} from 'react-select';
 
 import {Container,ReactSelects} from './styles';
 interface Props extends SelectProps<OptionTypeBase> {
