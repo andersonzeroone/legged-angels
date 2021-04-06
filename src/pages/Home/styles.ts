@@ -74,16 +74,15 @@ export const ContainerMenu = styled.div`
   width:50%;
 `;
 
-export const ButtonSignIn = styled.button`
+export const ButtonSignIn = styled(Link)`
   display:flex;
   flex-direction:row;
   align-items:center;
   justify-content:center;
-
+  text-decoration:none;
 
   border-radius:10px;
-  border-color:#FFD04D;
-  border-width:3px;
+  border:3px solid #FFD04D;
   background:#FFFFFF;
   color:#5390A6;
 
@@ -100,11 +99,12 @@ export const ButtonSignIn = styled.button`
 
 `;
 
-export const ButtonSignUp = styled.button`
+export const ButtonSignUp = styled(Link)`
   display:flex;
   flex-direction:row;
   align-items:center;
   justify-content:center;
+  text-decoration:none;
 
   background:#FFD04D;
   height:35px;

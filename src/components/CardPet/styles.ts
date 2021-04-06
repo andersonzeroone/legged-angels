@@ -84,7 +84,6 @@ export const CardSizePet = styled.div<PetProps>`
   border-radius:5px;
 `;
 
-
 export const CardSizePetP = styled(CardSizePet)`
 
   ${(props)=>
@@ -137,7 +136,6 @@ export const TextViewPet = styled.p`
   font-family:'Mulish', serif;
   font-weight:bold;
 `;
-
 
 export const Links = styled(Link)`
   display:flex;

@@ -139,7 +139,7 @@ function Home(){
             </ButtonNav>
 
             <ButtonNav>
-              <Links to='/' style={{textDecoration:'none'}}>
+              <Links to='/addnewpet' style={{textDecoration:'none'}}>
                 <IconButtonNav
                   src={imgAddPet}
                 />
@@ -160,12 +160,12 @@ function Home(){
 
           <p>|</p>
 
-          <ButtonSignIn>
+          <ButtonSignIn to='signin'>
             Login
             <FiLogIn style={{marginLeft:5}}/>
           </ButtonSignIn>
 
-          <ButtonSignUp>
+          <ButtonSignUp to='signup'>
             Cadastra-se
             <FiUserPlus  size={20} style={{marginLeft:5}}/>
           </ButtonSignUp>

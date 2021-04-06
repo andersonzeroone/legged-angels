@@ -246,7 +246,6 @@ const SignUp:React.FC =() =>{
       }
       console.log(response.data);
 
-      console.log('aqui')
 
     }catch(err){
       // console.log(err.response.data)
