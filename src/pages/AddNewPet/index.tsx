@@ -1,18 +1,14 @@
-import React, {ChangeEvent, useCallback, useEffect, useState, useRef} from 'react';
+import React, {ChangeEvent, useEffect, useState, useRef} from 'react';
 import {Link} from 'react-router-dom';
 import {Form} from '@unform/web';
 import {FormHandles} from '@unform/core';
 import {useHistory} from 'react-router-dom';
-import axios from 'axios';
 import *  as Yup from 'yup';
-
 
 import getValidationErrors from '../../utils/getValidationErrors';
 
 import Button from "../../components/button";
 import Input from "../../components/input";
-import imgDogCat from '../../assets/ImgDogCat.png';
-import imgDog from '../../assets/ImgDog.png';
 
 import {
   Container,
@@ -60,13 +56,6 @@ const AddNewPet:React.FC =() =>{
 // function SignUp(){
   const history = useHistory();
 
-  const img = [
-    {id:1,imgs:imgDog},
-    {id:2,imgs:imgDogCat},
-    {id:3,imgs:imgDog},
-    {id:4,imgs:imgDog},
-    {id:5,imgs:imgDog},
-  ]
   const formRef = useRef<FormHandles>(null);
   const [status,setStatus] = useState('');
   const [sex,setSex] = useState('');
@@ -109,7 +98,7 @@ const AddNewPet:React.FC =() =>{
 
     const arrayPreveiw = previewImages;
 
-    const previewFilter = arrayPreveiw.filter((img, index)=> index != id);
+    const previewFilter = arrayPreveiw.filter((img, index)=> index !== id);
 
     const newImagesFile = images.slice(id,1);
 
