@@ -1,6 +1,4 @@
-import { useRef } from 'react';
 import {Form} from '@unform/web';
-import {FormHandles} from '@unform/core';
 import {useHistory} from 'react-router-dom';
 import { FiSearch } from 'react-icons/fi';
 
