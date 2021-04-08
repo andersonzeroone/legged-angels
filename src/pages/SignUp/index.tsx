@@ -159,7 +159,11 @@ const SignUp:React.FC =() =>{
         name:Yup.string()
           .required('Nome obrigatório'),
         lastName:Yup.string()
+        .when('type',{
+          is:'common',
+          then:Yup.string()
           .required('Sobrenome obrigatório'),
+        }),
         whatsapp:Yup.string()
           .required(),
         telephone:Yup.string()
@@ -210,7 +214,6 @@ const SignUp:React.FC =() =>{
       await schema.validate(data,{
         abortEarly:false,
       })
-
       const dataUser = new FormData();
 
       dataUser.append('type',data.type)
@@ -236,23 +239,25 @@ const SignUp:React.FC =() =>{
       images.forEach(photoProfile =>{
         dataUser.append('photoProfile',photoProfile)
       })
-
+      console.log('dataForm',dataUser);
       const response = await api.post('/v1/user/register',dataUser);
 
       const {token} = response.data;
 
       if(token){
-        history.push('/home')
+        history.push('/')
       }
       console.log(response.data);
 
 
     }catch(err){
-      // console.log(err.response.data)
+      if(err instanceof Yup.ValidationError){
+        const erros = getValidationErrors(err);
+        formRef.current?.setErrors(erros);
 
-      const errors = getValidationErrors(err);
-
-      formRef.current?.setErrors(errors);
+        return;
+      }
+      console.log(err.response.data.result.mensagem)
     }
   },[images,history]);
 

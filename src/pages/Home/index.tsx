@@ -3,21 +3,14 @@ import {FiLogIn,FiUserPlus} from 'react-icons/fi';
 import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
 import {Form} from '@unform/web';
 import {FormHandles} from '@unform/core';
+import axios from 'axios';
 
 import {
   ConatinerMain,
   Container,
-  Header,
-  IconButtonNav,
-  Links,
-  ButtonNav,
-  ContainerMenu,
-  ButtonSignIn,
-  ButtonSignUp,
   Content,
   ContainerMotivation,
   ContainerImage,
-  ContainerButtonNav,
   Title,
   SubTitle,
   ImageMotivation,
@@ -40,9 +33,6 @@ import {
 
  } from './styles';
 
-import imgHome from '../../assets/home.png';
-import imgAddPet from '../../assets/addPet.png';
-import imgMyPet from '../../assets/myPet.png';
 import imgDogCat from '../../assets/ImgDogCat.png';
 import imgDog from '../../assets/ImgDog.png';
 import divisor from '../../assets/divisor.png';
@@ -51,8 +41,9 @@ import backGroundFooter from '../../assets/imgfooter.png';
 
 import Button from '../../components/button';
 import CardPets from '../../components/CardPet';
-import Select from '../../components/select'
-import axios from 'axios';
+import Select from '../../components/select';
+import Header from '../../components/header';
+
 interface IbgeUfResponse{
   sigla:string;
 }
@@ -125,53 +116,7 @@ function Home(){
   return(
     <ConatinerMain>
     <Container>
-      <Header>
-      <p>LOGO</p>
-        <ContainerMenu>
-          <ContainerButtonNav>
-            <ButtonNav>
-              <Links to='/'>
-                <IconButtonNav
-                  src={imgHome}
-                />
-                Home
-              </Links>
-            </ButtonNav>
-
-            <ButtonNav>
-              <Links to='/addnewpet' style={{textDecoration:'none'}}>
-                <IconButtonNav
-                  src={imgAddPet}
-                />
-                Cadastrar pet
-              </Links>
-            </ButtonNav>
-
-            <ButtonNav>
-              <Links to='/'>
-                <IconButtonNav
-                  src={imgMyPet}
-                />
-                Meus pets
-              </Links>
-            </ButtonNav>
-
-          </ContainerButtonNav>
-
-          <p>|</p>
-
-          <ButtonSignIn to='signin'>
-            Login
-            <FiLogIn style={{marginLeft:5}}/>
-          </ButtonSignIn>
-
-          <ButtonSignUp to='signup'>
-            Cadastra-se
-            <FiUserPlus  size={20} style={{marginLeft:5}}/>
-          </ButtonSignUp>
-        </ContainerMenu>
-      </Header>
-
+      <Header/>
       <Content>
         <ContainerMotivation>
           <Title>Traga Felicidade
@@ -338,9 +283,6 @@ function Home(){
           </MapContainer>
         </ContainerMap>
       </ContainerPositionMapOngs>
-
-      {/* <TextCountPetsLost>Quantidade de pets perdidos  90.</TextCountPetsLost> */}
-
 
     </Container>
     <Footer>

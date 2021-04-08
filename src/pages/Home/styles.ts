@@ -1,13 +1,12 @@
 import styled from 'styled-components';
 import fundoSvg from '../../assets/fundo-page3.svg';
 import { shade } from 'polished';
-import { Link } from 'react-router-dom';
-
 
 export const ConatinerMain = styled.div`
   display:flex;
   flex-direction:column;
   align-items:center;
+  width:100vw;
 `;
 
 export const Container = styled.div`
@@ -20,106 +19,6 @@ export const Container = styled.div`
   align-items:flex-start;
   padding:0 25px 100px;
   height:100vh;
-`;
-
-export const Header = styled.nav`
-  display:flex;
-  flex-direction:row;
-  align-items:center;
-  justify-content:space-between;
-
-  width:100%;
-  padding:0 20px;
-
-  margin-top:15px;
-`;
-
-export const ContainerButtonNav = styled.ul`
-  text-decoration:none;
-  display:flex;
-  flex-direction:row;
-  list-style:none;
-
-  width:430px;
-  /* background: #000; */
-`;
-
-export const ButtonNav = styled.li``;
-
-export  const IconButtonNav = styled.img`
-  height:22px;
-  width:22px;
-  margin-right:8px;
-`;
-
-export const Links = styled(Link)`
-  display:flex;
-  flex-direction:row;
-  text-decoration:none;
-  margin-right:5px;
-
-  font-size:1.2rem;
-  margin-right:15px;
-  color:#000;
-  font-family:'Mulish', serif;
-  font-weight:bold;
-
-`;
-
-export const ContainerMenu = styled.div`
-  display:flex;
-  flex-direction:row;
-  align-items:center;
-  justify-content:flex-end;
-  width:50%;
-`;
-
-export const ButtonSignIn = styled(Link)`
-  display:flex;
-  flex-direction:row;
-  align-items:center;
-  justify-content:center;
-  text-decoration:none;
-
-  border-radius:10px;
-  border:3px solid #FFD04D;
-  background:#FFFFFF;
-  color:#5390A6;
-
-  height:35px;
-  width:130px;
-  margin:0 20px 0;
-
-  font-weight:bold;
-  transition: background-color 0.2s;
-
-  &:hover{
-    background:${shade(0.2,'#FFFFFF')};
-  }
-
-`;
-
-export const ButtonSignUp = styled(Link)`
-  display:flex;
-  flex-direction:row;
-  align-items:center;
-  justify-content:center;
-  text-decoration:none;
-
-  background:#FFD04D;
-  height:35px;
-  border-radius:10px;
-  border:0;
-  padding: 0 10px;
-  width:150px;
-  color:#FFF;
-  font-weight:bold;
-  transition: background-color 0.2s;
-
-  &:hover{
-    background:${shade(0.2,'#FFD04D')};
-  }
-
 `;
 
 export const Content = styled.div`
@@ -310,19 +209,21 @@ export const ContainerMap = styled.div`
 `;
 
 export const Footer = styled.div`
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:flex-end;
+  /* display:flex; */
+  /* flex-direction:column; */
+  /* align-items:center; */
+  /* justify-content:flex-end; */
   background: #73ABBF;
   /* position:absolute; */
-  bottom:0;
-  width:100%;
-  height:150px;
+  /* bottom:0; */
+  width:100vw;
+  /* height:150px; */
+
+
 
 `;
 
 export const ImageFooterBackgound =  styled.img`
-  width:100%;
+  width:90%;
   height:100px;
 `;
