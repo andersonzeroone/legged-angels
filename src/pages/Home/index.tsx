@@ -227,7 +227,7 @@ function Home(){
             city='Senhor do Bonfim'
             status='para Adoção'
             size='P'
-
+            onClick={handleNavigationListPet}
           />
           <CardPets
             namePet='Logan'
@@ -236,7 +236,7 @@ function Home(){
             city='Senhor do Bonfim'
             status='para Adoção'
             size='P'
-
+            onClick={handleNavigationListPet}
           />
           <CardPets
             namePet='Logan'
@@ -245,7 +245,7 @@ function Home(){
             city='Senhor do Bonfim'
             status='para Adoção'
             size='P'
-
+            onClick={handleNavigationListPet}
           />
           <CardPets
             namePet='Logan'
@@ -254,7 +254,7 @@ function Home(){
             city='Senhor do Bonfim'
             status='para Adoção'
             size='P'
-
+            onClick={handleNavigationListPet}
           />
         </ContentSlidePet>
 
