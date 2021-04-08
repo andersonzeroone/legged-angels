@@ -53,7 +53,6 @@ const optionsPhase = [
 ]
 const ListPets: React.FC = () => {
   const history = useHistory();
-  const formRef = useRef<FormHandles>(null);
 
   function handleNavigationListPet(){
     history.push('listPets');
