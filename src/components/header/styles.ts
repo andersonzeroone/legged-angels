@@ -9,9 +9,10 @@ export const ContainerHeader = styled.nav`
   justify-content:space-between;
 
   width:100%;
-  padding:0 20px;
+  padding:0 20px 10px;
 
   margin-top:15px;
+  border-bottom:1px solid #5390A6;
 `;
 
 export const ContainerButtonNav = styled.ul`

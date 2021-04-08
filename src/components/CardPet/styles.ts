@@ -1,17 +1,16 @@
 import styled, { css } from 'styled-components';
-import { Link } from 'react-router-dom';
 
 interface PetProps{
   size:string;
 }
 
-export const Container = styled.div`
+export const  Container = styled.div`
   width:200px;
   border-radius:10px;
-  /* margin-bottom:20%; */
+  margin-bottom:80px;
   padding-bottom:10px;
   margin-right:80px;
-  box-shadow: 5px 2px 4px 3px rgb(141, 140, 140);
+  box-shadow: 0px 3px 5px 4px rgb(141, 140, 140);
 `;
 
 export const Imagepet = styled.img`
@@ -137,7 +136,7 @@ export const TextViewPet = styled.p`
   font-weight:bold;
 `;
 
-export const Links = styled(Link)`
+export const ContainerButton = styled.button`
   display:flex;
   flex-direction:row;
   text-decoration:none;
@@ -149,4 +148,6 @@ export const Links = styled(Link)`
   font-family:'Mulish', serif;
   font-weight:bold;
 
+  border:0;
+  background: none;
 `;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ButtonHTMLAttributes} from 'react';
 import {FiArrowRight} from 'react-icons/fi';
 
  import {
@@ -18,13 +18,15 @@ import {FiArrowRight} from 'react-icons/fi';
   TextSizePet,
   ContainerViewPet,
   TextViewPet,
-  Links
+  ContainerButton
   } from './styles';
 
 import imgPinMap from '../../assets/pinMap.png';
 import imgStatus from '../../assets/kiss.png';
 import imgSexPetM from '../../assets/imgSexo.png';
 import imgSexyPetF from '../../assets/imgSexyF.png';
+
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>
 
 interface CardPetProps{
   city:string;
@@ -35,13 +37,16 @@ interface CardPetProps{
   size:string;
 }
 
-const CardPet: React.FC<CardPetProps> = ({
+type ButtonCardProps = ButtonProps & CardPetProps
+const CardPet: React.FC<ButtonCardProps> = ({
   imagePet,
   namePet,
   sexy,
   city,
   status,
-  size}) => {
+  size,
+  ...rest
+}) => {
   return(
     <>
       <Container>
@@ -93,10 +98,10 @@ const CardPet: React.FC<CardPetProps> = ({
           </ContainerSizePet>
 
           <ContainerViewPet>
-            <Links to='/home'>
+            <ContainerButton  {...rest}>
               <TextViewPet>Ver mais</TextViewPet>
               <FiArrowRight color='#104B60'/>
-            </Links>
+            </ContainerButton>
           </ContainerViewPet>
 
         </FooterCardPet>

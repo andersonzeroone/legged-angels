@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import {FiLogIn,FiUserPlus} from 'react-icons/fi';
 import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
 import {Form} from '@unform/web';
 import {FormHandles} from '@unform/core';
 import axios from 'axios';
+import {useHistory} from 'react-router-dom';
 
 import {
   ConatinerMain,
@@ -58,6 +58,8 @@ const optionsType = [
 ]
 
 function Home(){
+  const history = useHistory();
+
   const [position, setPosition] = useState({ lat:-11.2020652,lng:-40.521877});
 
   const formRef = useRef<FormHandles>(null);
@@ -66,7 +68,6 @@ function Home(){
   const [cities,setCities] = useState<string[]>([]);
 
   useEffect(()=>{
-
     axios.get<IbgeUfResponse[]>('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
      .then( response =>{
        const ufInitials = response.data.map( uf => uf.sigla);
@@ -83,12 +84,12 @@ function Home(){
      })
  },[selectedUf]);
 
-
   function handleSelect(ev:any){
     const value = ev.value;
     console.log(value)
     setSelectedUf(value);
   }
+
   function LocationMarker(){
 
     const map = useMapEvents({
@@ -112,6 +113,10 @@ function Home(){
   const getData = useCallback((data:object)=>{
     console.log(data);
   },[]);
+
+  function handleNavigationListPet(){
+    history.push('listPets');
+  }
 
   return(
     <ConatinerMain>
@@ -204,6 +209,7 @@ function Home(){
         </ContainerTitleLostPet>
 
         <ContentSlidePet>
+
           <CardPets
             namePet='Logan'
             sexy='F'
@@ -211,8 +217,9 @@ function Home(){
             city='Senhor do Bonfim'
             status='para Adoção'
             size='P'
-
+            onClick={handleNavigationListPet}
           />
+
           <CardPets
             namePet='Logan'
             sexy='F'
