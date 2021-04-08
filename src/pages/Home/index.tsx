@@ -266,8 +266,8 @@ function Home(){
           <MapContainer
             center={[-11.2002747, -40.5228873]}
             style={{
-              width: "80%",
-              height: 380,
+              width: "90%",
+              height: 420,
               borderRadius:20
             }}
             zoom={15}

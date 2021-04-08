@@ -6,19 +6,18 @@ export const ConatinerMain = styled.div`
   display:flex;
   flex-direction:column;
   align-items:center;
-  width:100vw;
 `;
 
 export const Container = styled.div`
-  flex:1;
-  background:url(${fundoSvg}) no-repeat center;
-  background-size:cover;
   display:flex;
-
+  flex:1;
   flex-direction:column;
   align-items:flex-start;
-  padding:0 25px 100px;
-  height:100vh;
+
+  background:url(${fundoSvg}) no-repeat center;
+  background-size:cover;
+
+  padding:0 25px 0;
 `;
 
 export const Content = styled.div`
@@ -33,8 +32,8 @@ export const Content = styled.div`
 export const ContainerMotivation = styled.div`
   display:flex;
   flex-direction:column;
-  align-items:flex-start;
-  justify-content:center;
+  /* align-items:flex-start; */
+  /* justify-content:center; */
   width:50%;
 `;
 
@@ -140,9 +139,8 @@ export const Divisor = styled.img``;
 export const ContainerLostPet = styled.div`
   margin-top:80px;
   width:100%;
-  height:50px;
-  margin-bottom:500px;
-  padding:0 40px;
+  margin-bottom:40px;
+  padding:0 20px;
 `;
 
 export const ContentSlidePet = styled.div`
@@ -151,8 +149,6 @@ export const ContentSlidePet = styled.div`
   width:100%;
   align-items:center;
   margin-top:60px;
-  /* justify-content:space-between; */
-  /* background: #000; */
 `;
 
 export const ContainerTitleLostPet = styled.div`
@@ -187,7 +183,7 @@ export const ContainerPositionMapOngs = styled.div`
   align-items:center;
   justify-content:center;
 
-  margin-top:100px;
+  margin:100px 0 200px;
 `;
 
 export const TextPositionsMapOngs = styled.p`
@@ -198,7 +194,6 @@ export const TextPositionsMapOngs = styled.p`
 
 export const ContainerMap = styled.div`
   margin-top:20px;
-
   width: 90%;
   height:100%;
 
@@ -209,15 +204,16 @@ export const ContainerMap = styled.div`
 `;
 
 export const Footer = styled.div`
-  /* display:flex; */
-  /* flex-direction:column; */
-  /* align-items:center; */
-  /* justify-content:flex-end; */
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-end;
   background: #73ABBF;
-  /* position:absolute; */
-  /* bottom:0; */
-  width:100vw;
-  /* height:150px; */
+  bottom:0;
+  left:0;
+  right:0;
+  width:100%;
+  height:150px;
 
 
 
