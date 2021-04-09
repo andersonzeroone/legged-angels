@@ -184,7 +184,6 @@ export const Divider = styled.img`
   width:100%;
 `;
 
-
 export const ButtonAdoption = styled.button`
   display:flex;
   flex-direction:row;
@@ -219,4 +218,42 @@ export const IconAdoption = styled.img`
   height:35px;
   width:35px;
   margin-right:10px;
+`;
+
+export const ContainerLostPet = styled.div`
+  margin:50px 0 80px;
+  width:90%;
+`;
+
+export const ContainerTitleLostPet = styled.div`
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+
+  width:100%;
+`;
+
+export const TitleLostPet = styled.h1`
+  font-size:2.5rem;
+  color:#000;
+  font-family:'Mulish', serif;
+  font-weight:bold;
+`;
+
+export const ContentSlidePet = styled.div`
+  display:flex;
+  flex-direction:row;
+  width:100%;
+  align-items:center;
+  margin-top:60px;
+`;
+
+export const TextCountPetsLost = styled.p`
+  color:#104B60;
+  font-size:1rem;
+  font-family:'Mulish', serif;
+  font-weight:bold;
+
+  margin:-60px 0 20px;
 `;

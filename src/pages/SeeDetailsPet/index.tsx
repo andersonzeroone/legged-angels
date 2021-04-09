@@ -6,6 +6,8 @@ import {
 
 import Header from '../../components/header';
 import Footer from '../../components/footer';
+import Button from '../../components/button';
+import CardPets from '../../components/CardPet';
 
 import imgPet from '../../assets/ImgDogCat.png'
 import imgCat from '../../assets/imgPet.png'
@@ -40,7 +42,12 @@ import {
   ContainerDivider,
   Divider,
   ButtonAdoption,
-  IconAdoption
+  IconAdoption,
+  ContainerLostPet,
+  ContainerTitleLostPet,
+  TitleLostPet,
+  ContentSlidePet,
+  TextCountPetsLost
 } from "./styles";
 
 
@@ -56,6 +63,10 @@ const SeeDetailsPet:React.FC =() =>{
   ]
   // const [previewImages, setPreviewImages] = useState<string[]>([]);
   const [activeImageindex,setActiveImageindex] = useState(0);
+
+  function handleNavigationListPet(){
+    history.push('listPets');
+  }
 
   return (
     <>
@@ -184,6 +195,67 @@ const SeeDetailsPet:React.FC =() =>{
             Quero adotar
           </ButtonAdoption>
         </Content>
+
+        <ContainerLostPet>
+          <ContainerTitleLostPet>
+            <TitleLostPet>Ajude os pets perdidos a encontrarem seus donos.</TitleLostPet>
+          </ContainerTitleLostPet>
+
+          <ContentSlidePet>
+
+            <CardPets
+              namePet='Logan'
+              sexy='F'
+              imagePet={imgPet}
+              city='Senhor do Bonfim'
+              status='para Adoção'
+              size='P'
+              onClick={handleNavigationListPet}
+            />
+
+            <CardPets
+              namePet='Logan'
+              sexy='F'
+              imagePet={imgPet}
+              city='Senhor do Bonfim'
+              status='para Adoção'
+              size='P'
+              onClick={handleNavigationListPet}
+            />
+            <CardPets
+              namePet='Logan'
+              sexy='F'
+              imagePet={imgPet}
+              city='Senhor do Bonfim'
+              status='para Adoção'
+              size='P'
+              onClick={handleNavigationListPet}
+            />
+            <CardPets
+              namePet='Logan'
+              sexy='F'
+              imagePet={imgPet}
+              city='Senhor do Bonfim'
+              status='para Adoção'
+              size='P'
+              onClick={handleNavigationListPet}
+            />
+            <CardPets
+              namePet='Logan'
+              sexy='F'
+              imagePet={imgPet}
+              city='Senhor do Bonfim'
+              status='para Adoção'
+              size='P'
+              onClick={handleNavigationListPet}
+            />
+          </ContentSlidePet>
+
+          <TextCountPetsLost>Quantidade de pets perdidos  90.</TextCountPetsLost>
+          <Button style={{width:200}}>
+              Ver mais.
+          </Button>
+        </ContainerLostPet>
       </Container>
       <Footer/>
     </>
