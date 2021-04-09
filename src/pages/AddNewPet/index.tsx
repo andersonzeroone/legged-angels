@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState, useRef} from 'react';
+import React, {ChangeEvent, useState, useRef} from 'react';
 import {Link} from 'react-router-dom';
 import {Form} from '@unform/web';
 import {FormHandles} from '@unform/core';
@@ -64,10 +64,6 @@ const AddNewPet:React.FC =() =>{
   const [vaccination,setVaccination] = useState('');
   const [castration,setCastration] = useState('');
   const [feature,setFeature] = useState('');
-
-  useEffect(()=>{
-    console.log(status)
-  },[status]);
 
   const [images, setImages] = useState<File[]>([]);
   const [previewImages, setPreviewImages] = useState<string[]>([]);

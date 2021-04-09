@@ -6,6 +6,7 @@ import SignUp from '../pages/SignUp';
 import Home from '../pages/Home';
 import AddNewPet from '../pages/AddNewPet';
 import ListPets from '../pages/ListPets';
+import SeeDetailsPet from '../pages/SeeDetailsPet';
 
 const Routes: React.FC=()=>(
   <Switch>
@@ -14,6 +15,7 @@ const Routes: React.FC=()=>(
     <Route path='/signup'  component={SignUp}/>
     <Route path='/addnewpet'  component={AddNewPet}/>
     <Route path='/listPets'  component={ListPets}/>
+    <Route path='/seeDetailsPet'  component={SeeDetailsPet}/>
 
   </Switch>
 )

@@ -53,7 +53,7 @@ const ListPets: React.FC = () => {
   const history = useHistory();
 
   function handleNavigationListPet(){
-    history.push('listPets');
+    history.push('seeDetailsPet');
   }
 
   return(
