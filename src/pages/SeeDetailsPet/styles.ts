@@ -257,3 +257,161 @@ export const TextCountPetsLost = styled.p`
 
   margin:-60px 0 20px;
 `;
+
+export const  ContainerModal = styled.div``;
+
+export const HeaderModal = styled.div`
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+`;
+
+export const TitleModal = styled.p`
+  color:#104B60;
+  font-size:2.5rem;
+  font-family:'Mulish', serif;
+  font-weight:900;
+`;
+
+export const MainModal = styled.div`
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  padding:0 20px;
+`;
+
+export const ContainerInfoModal = styled.div`
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+`;
+
+export const LegendModal = styled.p`
+  color:#104B60;
+  font-size:1.8rem;
+  font-family:'Mulish', serif;
+  font-weight:900;
+  margin:20px 0;
+`;
+
+export const LabelModal = styled.p`
+  color:#104B60;
+  font-size:1.6rem;
+  font-family:'Mulish', serif;
+  font-weight:bold;
+  margin-right:10px;
+`;
+
+export const TextModal = styled.p`
+  color:#104B60;
+  font-size:1.6rem;
+  font-family:'Mulish', serif;
+`;
+
+export const TextContatcModal = styled.p`
+  color:#104B60;
+  font-size:1.6rem;
+  font-family:'Mulish', serif;
+
+  margin-right:40px;
+`;
+
+export const ButtonWhats = styled.button`
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  text-decoration:none;
+
+  background:#FFD04D;
+  height:55px;
+  border-radius:10px;
+  border:0;
+
+  padding: 0 15px;
+
+  height:40px;
+  width:240px;
+
+  color:#FFF;
+  font-size:1.3rem;
+  font-family:'Mulish', serif;
+  font-weight:bold;
+
+  transition: background-color 0.2s;
+
+  &:hover{
+    background:${shade(0.2,'#FFD04D')};
+  }
+
+`;
+
+export const ButtonEmail = styled.button`
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  text-decoration:none;
+
+  background:#5390A6;
+  height:45px;
+  border-radius:10px;
+  border:0;
+
+  padding: 0 15px;
+
+  height:40px;
+  width:200px;
+
+  color:#FFF;
+  font-size:1.3rem;
+  font-family:'Mulish', serif;
+  font-weight:bold;
+
+  transition: background-color 0.2s;
+
+  &:hover{
+    background:${shade(0.2,'#5390A6')};
+  }
+
+`;
+
+export const FooterModal = styled.div`
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+
+  margin:120px 0 70px;
+`;
+
+export const ButtonCloseModal = styled.button`
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  text-decoration:none;
+
+  background:#997308;
+  height:45px;
+  border-radius:10px;
+  border:0;
+
+  padding: 0 15px;
+
+  height:40px;
+  width:135px;
+
+  color:#FFF;
+  font-size:1.3rem;
+  font-family:'Mulish', serif;
+  font-weight:bold;
+
+  transition: background-color 0.2s;
+
+  &:hover{
+    background:${shade(0.2,'#5390A6')};
+  }
+
+`;
+

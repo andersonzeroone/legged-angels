@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import {useHistory} from 'react-router-dom';
-import {
-  FiArrowLeft,
-} from "react-icons/fi";
+import {FiArrowLeft, FiMail, FiMessageCircle, FiX} from "react-icons/fi";
+import Modal from 'react-modal';
 
 import Header from '../../components/header';
 import Footer from '../../components/footer';
@@ -47,13 +46,40 @@ import {
   ContainerTitleLostPet,
   TitleLostPet,
   ContentSlidePet,
-  TextCountPetsLost
+  TextCountPetsLost,
+  ContainerModal,
+  HeaderModal,
+  TitleModal,
+  MainModal,
+  ContainerInfoModal,
+  LegendModal,
+  TextModal,
+  TextContatcModal,
+  LabelModal,
+  ButtonWhats,
+  ButtonEmail,
+  FooterModal,
+  ButtonCloseModal
+
 } from "./styles";
 
-
-
+const customStyles = {
+  content : {
+    top  : '50%',
+    left : '50%',
+    right: 'auto',
+    bottom : 'auto',
+    marginRight : '-50%',
+    transform : 'translate(-50%, -50%)',
+    borderRadius:20,
+    width:'50%'
+  }
+};
 const SeeDetailsPet:React.FC =() =>{
   const history = useHistory();
+
+  const [modalIsOpen,setIsOpen] = useState(false);
+
   const imgs = [
     {img:imgCat},
     {img:imgCat},
@@ -66,6 +92,10 @@ const SeeDetailsPet:React.FC =() =>{
 
   function handleNavigationListPet(){
     history.push('listPets');
+  }
+
+  function handleisModal(){
+    setIsOpen((state) => !state);
   }
 
   return (
@@ -190,7 +220,9 @@ const SeeDetailsPet:React.FC =() =>{
             </ContentInfo>
           </ContainerInfo>
 
-          <ButtonAdoption>
+          <ButtonAdoption
+            onClick={handleisModal}
+          >
             <IconAdoption src={iconAdoption}/>
             Quero adotar
           </ButtonAdoption>
@@ -206,7 +238,7 @@ const SeeDetailsPet:React.FC =() =>{
             <CardPets
               namePet='Logan'
               sexy='F'
-              imagePet={imgPet}
+              imagePet={imgCat}
               city='Senhor do Bonfim'
               status='para Adoção'
               size='P'
@@ -216,7 +248,7 @@ const SeeDetailsPet:React.FC =() =>{
             <CardPets
               namePet='Logan'
               sexy='F'
-              imagePet={imgPet}
+              imagePet={imgCat}
               city='Senhor do Bonfim'
               status='para Adoção'
               size='P'
@@ -225,7 +257,7 @@ const SeeDetailsPet:React.FC =() =>{
             <CardPets
               namePet='Logan'
               sexy='F'
-              imagePet={imgPet}
+              imagePet={imgCat}
               city='Senhor do Bonfim'
               status='para Adoção'
               size='P'
@@ -234,7 +266,7 @@ const SeeDetailsPet:React.FC =() =>{
             <CardPets
               namePet='Logan'
               sexy='F'
-              imagePet={imgPet}
+              imagePet={imgCat}
               city='Senhor do Bonfim'
               status='para Adoção'
               size='P'
@@ -252,10 +284,82 @@ const SeeDetailsPet:React.FC =() =>{
           </ContentSlidePet>
 
           <TextCountPetsLost>Quantidade de pets perdidos  90.</TextCountPetsLost>
-          <Button style={{width:200}}>
+          <Button
+            style={{width:200}}
+          >
               Ver mais.
           </Button>
         </ContainerLostPet>
+
+        <ContainerModal>
+          <Modal
+            isOpen={modalIsOpen}
+            style={customStyles}
+            contentLabel="Example Modal"
+          >
+            <HeaderModal>
+              <TitleModal>Dados para Adoção/contato</TitleModal>
+            </HeaderModal>
+
+            <MainModal>
+              <LegendModal>Dados do doador:</LegendModal>
+
+              <ContainerInfoModal>
+                <LabelModal>Cidade:</LabelModal>
+                <TextModal>Senhor do Bonfim - BA</TextModal>
+              </ContainerInfoModal>
+
+              <ContainerInfoModal>
+                <LabelModal>CEP:</LabelModal>
+                <TextModal>48970-000</TextModal>
+              </ContainerInfoModal>
+
+              <ContainerInfoModal>
+                <LabelModal>Rua:</LabelModal>
+                <TextModal>Rua aaaa</TextModal>
+              </ContainerInfoModal>
+
+              <ContainerInfoModal>
+                <LabelModal>Bairro:</LabelModal>
+                <TextModal>Nossa alegria</TextModal>
+              </ContainerInfoModal>
+
+              <ContainerDivider>
+                <Divider src={divider}/>
+              </ContainerDivider>
+
+              <LegendModal>Contatos:</LegendModal>
+
+              <ContainerInfoModal>
+                <LabelModal>Whatsapp:</LabelModal>
+                <TextContatcModal>(74) 9 9999-8888</TextContatcModal>
+                <ButtonWhats>
+                  <FiMessageCircle size={20} style={{marginRight:10}}/>
+                  Entrar em contato
+                </ButtonWhats>
+              </ContainerInfoModal>
+
+              <ContainerInfoModal style={{marginTop:15}}>
+                <LabelModal>E-mail:</LabelModal>
+                <TextContatcModal>Nossaalegria@gmail.com</TextContatcModal>
+                <ButtonEmail>
+                  <FiMail size={20} style={{marginRight:10}}/>
+                  Enviar E-mail
+                </ButtonEmail>
+             </ContainerInfoModal>
+
+              <FooterModal>
+                <ButtonCloseModal
+                  onClick={handleisModal}
+                >
+                  <FiX size={20} style={{marginRight:10}}/>
+                  Fechar
+                </ButtonCloseModal>
+              </FooterModal>
+            </MainModal>
+
+          </Modal>
+        </ContainerModal>
       </Container>
       <Footer/>
     </>
