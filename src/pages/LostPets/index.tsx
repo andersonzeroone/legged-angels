@@ -54,10 +54,8 @@ const optionsPhase = [
 
 
 interface RouteParms{
-  species: string;
   uf: string;
   city:string;
-  typeSearch:string;
   page:number;
 }
 
@@ -71,34 +69,31 @@ interface PetProps{
   sex:string;
   status:string;
 }
-const ListPets: React.FC = () => {
+const LostPets: React.FC = () => {
   const history = useHistory();
 
   const route = useLocation();
   const data = route.state as RouteParms;
 
-  const [pets, setPets] = useState<PetProps[]>([])
+  const [lostPets, setLostPets] = useState<PetProps[]>([])
 
   function handleNavigationListPet(){
     history.push('seeDetailsPet');
   }
 
   useEffect(()=>{
-    api.get('v1/searchLocation',{
+    api.get('v1/pets/lost/searchLocation',{
       params:{
-        species:data.species,
         city:data.city,
         uf:data.uf,
-        typeSearch:data.typeSearch,
         page:data.page
       }
     })
       .then(res=>{
-        console.log(res.data);
-        setPets(res.data);
+        setLostPets(res.data);
 
       }).catch(err => {
-        console.log(err.response.data.result.mensagem);
+        console.log(err.response.data.result);
       })
   },[data])
 
@@ -118,7 +113,7 @@ const ListPets: React.FC = () => {
           </ContentSlide>
         </ContainerSlide>
 
-        <Title>Adote um pet</Title>
+        <Title>Animais perdidos</Title>
 
         <ContainerFilter>
            <Form
@@ -164,19 +159,18 @@ const ListPets: React.FC = () => {
         </ContainerFilter>
 
         <ContainerCards>
-          {pets.map(pet=>(
+          {lostPets.map(pet=>(
             <CardPets
               key={pet.idPet}
               namePet={pet.name}
               sexy='F'
               imagePet={pet.photo}
-              city={pet.city}
+              city={`${pet.city} - ${pet.uf}`}
               status={pet.status === 'adoption' ? 'Para adoção' : 'Perdido'}
               size={pet.phase === 'adult' ? 'P' : 'M'}
               onClick={handleNavigationListPet}
             />
           ))}
-
 
         </ContainerCards>
         <ContainerPagination/>
@@ -186,4 +180,4 @@ const ListPets: React.FC = () => {
   )
 }
 
-export default ListPets;
+export default LostPets;

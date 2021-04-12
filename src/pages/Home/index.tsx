@@ -225,7 +225,8 @@ function Home(){
       return;
     }
 
-  },[]);
+    history.push('lostPet',{...data,page:1,})
+  },[history]);
 
   const  handleFilterLost = useCallback(()=>{
     setFilterPetLost((state) => !state)
