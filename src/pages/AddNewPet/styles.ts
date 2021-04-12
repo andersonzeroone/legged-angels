@@ -7,9 +7,7 @@ export const Container = styled.div`
   flex:1;
   flex-direction:column;
   align-items:center;
-  /* height:100vh; */
-  padding:20px;
-  /* background: #000; */
+  padding:20px 20px 80px;
   background:url(${fundoSvg}) no-repeat center;
   background-size:cover;
 `;
@@ -263,4 +261,21 @@ export const ButtonCloseModal = styled.button`
     background:${shade(0.2,'#5390A6')};
   }
 
+`;
+
+export const ContainerLogon = styled.div`
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:20px;
+`;
+
+export const TitleLogon = styled.div`
+  font-size:1.8rem;
+  font-family:'Mulish', serif;
+`;
+
+export const ImageLogon = styled.img`
+  height:20rem;
+  margin:20px 0;
 `;
