@@ -1,3 +1,4 @@
+import { shade } from 'polished';
 import styled from 'styled-components';
 import fundoSvg from '../../assets/fundo1.svg';
 
@@ -36,7 +37,7 @@ export const Title = styled.h1`
 
 export const Content = styled.div`
   background: #FFFFFF;
-  width:70%;
+  width:50%;
   margin-top:30px;
   border-radius:15px;
   padding:10px 30px;
@@ -68,7 +69,6 @@ export const ContainerInfo = styled.div`
 export const ContentInfo = styled.div`
   margin-right:70px;
 `;
-
 
 export const InfoAdditional = styled.textarea`
   width:60%;
@@ -169,6 +169,13 @@ export const ButtonDeletePhoto = styled.button`
   margin-top:10px;
 `;
 
+export const ContainerButtonAddPhoto = styled.div`
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  /* justify-content:center; */
+
+`;
 
 export const ButtonAddPhoto = styled.label`
   height:6rem;
@@ -182,4 +189,78 @@ export const ButtonAddPhoto = styled.label`
   padding:5px;
 
   margin-left:20px;
+`;
+
+export const TextButtonAddPhoto = styled.p`
+  margin-top:10px;
+  margin-left:20px;
+`;
+
+export const  ContainerModal = styled.div``;
+
+export const HeaderModal = styled.div`
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+`;
+
+export const TitleModal = styled.p`
+  color:#104B60;
+  font-size:2.5rem;
+  font-family:'Mulish', serif;
+  font-weight:900;
+`;
+
+export const MainModal = styled.div`
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  padding:0 20px;
+`;
+
+export const TextModal = styled.p`
+  color:#104B60;
+  font-size:1.8rem;
+  font-family:'Mulish', serif;
+  margin-top:20px;
+`;
+
+export const FooterModal = styled.div`
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+
+  margin:80px 0 70px;
+`;
+
+export const ButtonCloseModal = styled.button`
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  text-decoration:none;
+
+  background:#997308;
+  height:45px;
+  border-radius:10px;
+  border:0;
+
+  padding: 0 15px;
+
+  height:40px;
+  width:135px;
+
+  color:#FFF;
+  font-size:1.3rem;
+  font-family:'Mulish', serif;
+  font-weight:bold;
+
+  transition: background-color 0.2s;
+
+  &:hover{
+    background:${shade(0.2,'#5390A6')};
+  }
+
 `;

@@ -194,7 +194,6 @@ function Home(){
     const dataPet = {typeSearch,page:1,...data}
     const {uf, city,species} = data;
 
-    console.log(dataPet)
     if(species === ''){
       setErros('Por favor, selecione um tipo de espécie para pesquisa.');
       setIsOpen(true);
@@ -218,7 +217,6 @@ function Home(){
   }
 
   const getDataPetsLost = useCallback(async(data:FilterLostProps)=>{
-    console.log('aui');
     const {uf, city}= data;
 
     if(uf === '' || city === ''){

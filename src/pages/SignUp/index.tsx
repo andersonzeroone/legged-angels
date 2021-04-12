@@ -4,7 +4,9 @@ import {Form} from '@unform/web';
 import {FormHandles} from '@unform/core';
 import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
 import {useHistory} from 'react-router-dom';
+import Modal from 'react-modal';
 import axios from 'axios';
+import { FiX } from 'react-icons/fi';
 import *  as Yup from 'yup';
 
 import getValidationErrors from '../../utils/getValidationErrors';
@@ -49,7 +51,14 @@ import {
   TextSelectPositionsMapOngs,
   ContainerMap,
   ContainerButton,
-  ButtonFinsh
+  ButtonFinsh,
+  ContainerModal,
+  HeaderModal,
+  TitleModal,
+  MainModal,
+  TextModal,
+  FooterModal,
+  ButtonCloseModal,
 } from "./styles";
 
 interface IbgeUfResponse{
@@ -82,6 +91,19 @@ interface SignUpFormData{
   logitude?:string;
 }
 
+const customStyles = {
+  content : {
+    top  : '50%',
+    left : '50%',
+    right: 'auto',
+    bottom : 'auto',
+    marginRight : '-50%',
+    transform : 'translate(-50%, -50%)',
+    borderRadius:20,
+    width:'50%'
+  }
+};
+
 const SignUp:React.FC =() =>{
 // function SignUp(){
   const history = useHistory();
@@ -105,6 +127,10 @@ const SignUp:React.FC =() =>{
 
   const [images, setImages] = useState<File[]>([]);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
+
+  const [errosForm,setErrosForm] = useState('');
+
+  const [modalIsOpen,setIsOpen] = useState(false);
 
   useEffect(()=>{
 
@@ -143,12 +169,24 @@ const SignUp:React.FC =() =>{
     const photoProfile = previewImages[0];
 
     const dataUser = {...data,logitude:lng.toString(),latitude:lat.toString(),photoProfile}
-    console.log(dataUser)
-    console.log(`foto no date `,previewImages)
     handleSubmit(dataUser)
   }
 
   const handleSubmit = useCallback(async(data:SignUpFormData)=>{
+    const {email,confirmEmail, password, confirmPassword} = data;
+
+    if(email !== confirmEmail){
+      setErrosForm('A confirmação de e-mail não corresponde com o e-mail informado. ');
+      setIsOpen(true);
+      return;
+    }
+
+    if(password !== confirmPassword){
+      setErrosForm('A confirmação de senha não corresponde com a senha informado. ');
+      setIsOpen(true);
+      return;
+    }
+
     try{
 
       formRef.current?.setErrors({});
@@ -175,11 +213,7 @@ const SignUp:React.FC =() =>{
         city:Yup.string()
           .required('Cidade obrigatória'),
         street:Yup.string()
-          .when('type',{
-            is:'ong',
-            then:Yup.string()
-              .required('Lougradoro/Rua obrigatório'),
-          }),
+            .required('Lougradoro/Rua obrigatório'),
         distric:Yup.string()
           .required('Bairro obrigatório'),
         addressNumber:Yup.string()
@@ -247,17 +281,19 @@ const SignUp:React.FC =() =>{
       if(token){
         history.push('/')
       }
-      console.log(response.data);
-
 
     }catch(err){
       if(err instanceof Yup.ValidationError){
         const erros = getValidationErrors(err);
         formRef.current?.setErrors(erros);
 
+        // setErrosForm([erros])
+        setIsOpen(true);
         return;
       }
-      console.log(err.response.data.result.mensagem)
+      setErrosForm(err.response.data.result.mensagem);
+      setIsOpen(true);
+      return;
     }
   },[images,history]);
 
@@ -298,6 +334,11 @@ const SignUp:React.FC =() =>{
     setPreviewImages(selectImagesPreview);
     console.log(selectImagesPreview[0])
   }
+
+  function handleisModal(){
+    setIsOpen((state) => !state);
+  }
+
 
   return (
     <Container>
@@ -591,6 +632,28 @@ const SignUp:React.FC =() =>{
           </ContainerDataUser>
         </Form>
       </Content>
+      <ContainerModal>
+       <Modal
+        isOpen={modalIsOpen}
+        style={customStyles}
+        contentLabel="Example Modal"
+       >
+          <HeaderModal>
+            <TitleModal>Por favor, verifique todos os dados</TitleModal>
+            </HeaderModal>
+          <MainModal>
+            <TextModal>{errosForm}</TextModal>
+          </MainModal>
+          <FooterModal>
+            <ButtonCloseModal
+              onClick={handleisModal}
+            >
+              <FiX size={20} style={{marginRight:10}}/>
+              Fechar
+            </ButtonCloseModal>
+          </FooterModal>
+       </Modal>
+      </ContainerModal>
     </Container>
   );
 }

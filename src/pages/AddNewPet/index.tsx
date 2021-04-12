@@ -2,8 +2,10 @@ import React, {ChangeEvent, useState, useRef} from 'react';
 import {Link} from 'react-router-dom';
 import {Form} from '@unform/web';
 import {FormHandles} from '@unform/core';
-import {useHistory} from 'react-router-dom';
 import *  as Yup from 'yup';
+import Modal from 'react-modal';
+import { FiArrowLeft, FiPlus, FiType, FiX } from 'react-icons/fi';
+import api from '../../services/api';
 
 import getValidationErrors from '../../utils/getValidationErrors';
 
@@ -31,12 +33,20 @@ import {
   ButtonImage,
   Image,
   ButtonDeletePhoto,
+  ContainerButtonAddPhoto,
   ButtonAddPhoto,
-  ButtonFinsh
+  TextButtonAddPhoto,
+  ButtonFinsh,
+  ContainerModal,
+  HeaderModal,
+  TitleModal,
+  MainModal,
+  TextModal,
+  FooterModal,
+  ButtonCloseModal,
 } from "./styles";
 
-import { FiArrowLeft, FiPlus, FiType } from 'react-icons/fi';
-import api from '../../services/api';
+
 
 interface PetProps{
   name:string;
@@ -52,11 +62,24 @@ interface PetProps{
   feature:string;
 }
 
+
+const customStyles = {
+  content : {
+    top  : '50%',
+    left : '50%',
+    right: 'auto',
+    bottom : 'auto',
+    marginRight : '-50%',
+    transform : 'translate(-50%, -50%)',
+    borderRadius:20,
+    width:'50%'
+  }
+};
+
 const AddNewPet:React.FC =() =>{
-// function SignUp(){
-  const history = useHistory();
 
   const formRef = useRef<FormHandles>(null);
+
   const [status,setStatus] = useState('');
   const [sex,setSex] = useState('');
   const [species,setSpecies] = useState('');
@@ -68,6 +91,10 @@ const AddNewPet:React.FC =() =>{
   const [images, setImages] = useState<File[]>([]);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
   const [activeImageindex,setActiveImageindex] = useState(0);
+
+  const [errosForm,setErrosForm] = useState('');
+
+  const [modalIsOpen,setIsOpen] = useState(false);
 
   function handleSelectImages(event: ChangeEvent<HTMLInputElement>){
     if(!event.target.files){
@@ -103,6 +130,7 @@ const AddNewPet:React.FC =() =>{
   }
 
   async function handleSubmit(data:PetProps){
+    console.log(data)
     try{
       formRef.current?.setErrors({});
 
@@ -121,50 +149,60 @@ const AddNewPet:React.FC =() =>{
         abortEarly:false,
       });
 
+
+      const newData = {
+        ...data,
+        status,
+        sex,
+        species,
+        phase,
+        vaccination,
+        castration,
+        feature
+      }
+
+      const dataPet = new FormData();
+
+      dataPet.append('name',newData.name)
+      dataPet.append('race',newData.race)
+      dataPet.append('hairColor',newData.hairColor)
+      dataPet.append('eyeColor',newData.eyeColor)
+      dataPet.append('status',newData.status)
+      dataPet.append('sex',newData.sex)
+      dataPet.append('species',newData.species)
+      dataPet.append('phase',newData.phase)
+      dataPet.append('vaccination',newData.vaccination)
+      dataPet.append('castration',newData.castration)
+      dataPet.append('feature',newData.feature)
+
+      images.forEach(photosPet =>{
+        dataPet.append('photos',photosPet)
+      });
+
+
+      await api.post('/v1/user/register',dataPet);
+
+      console.log(newData);
+
     }catch(err){
-      const errors = getValidationErrors(err);
-      formRef.current?.setErrors(errors);
+      if(err instanceof Yup.ValidationError){
+        const erros = getValidationErrors(err);
+        formRef.current?.setErrors(erros);
+        setIsOpen(true);
+        return;
+      }
+
+      console.log('dateErros',err.response.data.result.mensagem)
+      setErrosForm(err.response.data.result.mensagem);
+      setIsOpen(true);
+      return;
     }
 
-    const dataPet = new FormData();
-
-    dataPet.append('name',data.name)
-    dataPet.append('race',data.race)
-    dataPet.append('hairColor',data.hairColor)
-    dataPet.append('eyeColor',data.eyeColor)
-    dataPet.append('status',data.status)
-    dataPet.append('sex',data.sex)
-    dataPet.append('species',data.species)
-    dataPet.append('phase',data.phase)
-    dataPet.append('vaccination',data.vaccination)
-    dataPet.append('castration',data.castration)
-    dataPet.append('feature',data.feature)
-
-    images.forEach(photosPet =>{
-      dataPet.append('photos',photosPet)
-    });
+  }
 
 
-    const response = await api.post('/v1/user/register',dataPet);
-
-    const {token} = response.data;
-
-    if(token){
-      history.push('/home')
-    }
-    console.log(response.data);
-
-    console.log(
-    {...data,
-      status,
-      sex,
-      species,
-      phase,
-      vaccination,
-      castration,
-      feature
-    }
-    )
+  function handleisModal(){
+    setIsOpen((state) => !state);
   }
 
   return (
@@ -444,10 +482,13 @@ const AddNewPet:React.FC =() =>{
                 );
               })
             }
+            <ContainerButtonAddPhoto>
+              <ButtonAddPhoto htmlFor="image[]">
+                <FiPlus size={50} color="#15b6d6" />
+              </ButtonAddPhoto>
+              <TextButtonAddPhoto>Adicionar</TextButtonAddPhoto>
+            </ContainerButtonAddPhoto>
 
-            <ButtonAddPhoto htmlFor="image[]">
-              <FiPlus size={50} color="#15b6d6" />
-            </ButtonAddPhoto>
             </ContentImage>
 
           </ContainerImages>
@@ -469,6 +510,28 @@ const AddNewPet:React.FC =() =>{
 
         </Form>
       </Content>
+      <ContainerModal>
+       <Modal
+        isOpen={modalIsOpen}
+        style={customStyles}
+        contentLabel="Example Modal"
+       >
+          <HeaderModal>
+            <TitleModal>Por favor, verifique todos os dados</TitleModal>
+            </HeaderModal>
+          <MainModal>
+            <TextModal>{errosForm}</TextModal>
+          </MainModal>
+          <FooterModal>
+            <ButtonCloseModal
+              onClick={handleisModal}
+            >
+              <FiX size={20} style={{marginRight:10}}/>
+              Fechar
+            </ButtonCloseModal>
+          </FooterModal>
+       </Modal>
+      </ContainerModal>
     </Container>
   );
 }
