@@ -102,7 +102,7 @@ const AddNewPet:React.FC =() =>{
     setPreviewImages(previewFilter);
   }
 
-  async function getData(data:PetProps){
+  async function handleSubmit(data:PetProps){
     try{
       formRef.current?.setErrors({});
 
@@ -180,7 +180,7 @@ const AddNewPet:React.FC =() =>{
       <Content>
         <Legend>Dados:</Legend>
 
-        <Form  ref={formRef} onSubmit={getData}>
+        <Form  ref={formRef} onSubmit={handleSubmit}>
           <ContainerInfo>
             <ContentInfo>
               <Label>Nome</Label>

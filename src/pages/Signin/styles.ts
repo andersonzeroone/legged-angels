@@ -75,7 +75,7 @@ export const Header = styled.div`
   align-items:center;
   width:100%;
   padding:10px 20px;
-  margin-top:-20px;
+  margin-top:-60px;
 `;
 
 export const ForgotPassword = styled(Link)`

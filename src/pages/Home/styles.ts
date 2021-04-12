@@ -86,6 +86,22 @@ export const ContainerSearch = styled.div`
 
 `;
 
+export const ContainerTypeSearch = styled.div`
+  display:flex;
+  flex-direction:row;
+  margin-bottom:10px;
+`;
+
+export const LabelInputRadio = styled.label`
+  font-size:1.8rem;
+  font-family:'Mulish', serif;
+  margin-right:20px;
+`;
+
+export const InputRadio = styled.input`
+  margin-right:10px;
+`;
+
 export const ContainerSelectFilterSearch = styled.div`
   display:flex;
   flex-direction:row;
@@ -176,6 +192,22 @@ export const TextCountPetsLost = styled.p`
   margin:-60px 0 20px;
 `;
 
+export const ContainerFilterPetLost = styled.div`
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+`;
+
+export const TextFilterPetLost = styled.p`
+  color:#104B60;
+  font-size:1.2rem;
+  font-family:'Mulish', serif;
+  font-weight:bold;
+
+  margin-top:40px;
+  margin-bottom:15px;
+`;
+
 export const ContainerPositionMapOngs = styled.div`
   width:100%;
   display:flex;
@@ -220,4 +252,73 @@ export const Footer = styled.div`
 export const ImageFooterBackgound =  styled.img`
   width:90%;
   height:100px;
+`;
+
+export const  ContainerModal = styled.div``;
+
+export const HeaderModal = styled.div`
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+`;
+
+export const TitleModal = styled.p`
+  color:#104B60;
+  font-size:2.5rem;
+  font-family:'Mulish', serif;
+  font-weight:900;
+`;
+
+export const MainModal = styled.div`
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  padding:0 20px;
+`;
+
+export const TextModal = styled.p`
+  color:#104B60;
+  font-size:1.8rem;
+  font-family:'Mulish', serif;
+  margin-top:20px;
+`;
+
+export const FooterModal = styled.div`
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+
+  margin:80px 0 70px;
+`;
+
+export const ButtonCloseModal = styled.button`
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  text-decoration:none;
+
+  background:#997308;
+  height:45px;
+  border-radius:10px;
+  border:0;
+
+  padding: 0 15px;
+
+  height:40px;
+  width:135px;
+
+  color:#FFF;
+  font-size:1.3rem;
+  font-family:'Mulish', serif;
+  font-weight:bold;
+
+  transition: background-color 0.2s;
+
+  &:hover{
+    background:${shade(0.2,'#5390A6')};
+  }
+
 `;

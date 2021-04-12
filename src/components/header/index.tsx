@@ -1,5 +1,6 @@
-import React from 'react';
-import {FiLogIn,FiUserPlus} from 'react-icons/fi';
+import React, { useCallback } from 'react';
+import {FiLogIn,FiLogOut,FiUserPlus} from 'react-icons/fi';
+import {useAuth} from '../../hooks/AuthContext';
 
 import imgHome from '../../assets/home.png';
 import imgAddPet from '../../assets/addPet.png';
@@ -13,11 +14,31 @@ import {
   Links,
   IconButtonNav,
   ButtonSignIn,
-  ButtonSignUp
+  ButtonSignUp,
+  ContainerName,
+  ContainerImageNameUser,
+  ImageUser,
+  NameUser,
+  ContainerSignOut
 
 } from './styles';
 
-const Header: React.FC = () => {
+interface isUserProps{
+  isUser?:boolean;
+  imageUser?:string;
+  nameUser?:string;
+}
+
+const Header: React.FC<isUserProps> = ({isUser,imageUser, nameUser}) => {
+
+  const { signOut} = useAuth();
+
+  const hanldeSignOut = useCallback(()=>{
+    signOut();
+  },[signOut]);
+
+  const {user} = useAuth();
+
   return (
     <>
       <ContainerHeader>
@@ -55,17 +76,37 @@ const Header: React.FC = () => {
 
           <p>|</p>
 
-          <ButtonSignIn to='signin'>
-            Login
-            <FiLogIn style={{marginLeft:5}}/>
-          </ButtonSignIn>
+        {isUser? (
+          <>
+            <ContainerImageNameUser>
+              <ImageUser src={user.photoProfile}/>
+              <ContainerName>
+                <NameUser>Óla, {user.name}</NameUser>
+              </ContainerName>
 
-          <ButtonSignUp to='signup'>
-            Cadastra-se
-            <FiUserPlus  size={20} style={{marginLeft:5}}/>
-          </ButtonSignUp>
-        </ContainerMenu>
-      </ContainerHeader>
+              <ContainerSignOut
+                onClick={hanldeSignOut}
+              >
+                Sair
+                <FiLogOut style={{marginLeft:10}}/>
+              </ContainerSignOut>
+            </ContainerImageNameUser>
+          </>
+        ):(
+          <>
+            <ButtonSignIn to='signin'>
+              Login
+              <FiLogIn style={{marginLeft:5}}/>
+            </ButtonSignIn>
+
+            <ButtonSignUp to='signup'>
+              Cadastra-se
+              <FiUserPlus  size={20} style={{marginLeft:5}}/>
+            </ButtonSignUp>
+          </>
+        )}
+         </ContainerMenu>
+       </ContainerHeader>
     </>
   )
 }

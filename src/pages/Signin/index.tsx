@@ -4,6 +4,7 @@ import { FormHandles } from '@unform/core';
 import {FiLogIn, FiMail, FiLock, FiArrowLeft} from 'react-icons/fi';
 import {Form} from '@unform/web';
 import *  as Yup from 'yup';
+import {useHistory} from 'react-router-dom';
 import{ useAuth} from '../../hooks/AuthContext';
 
 import Button from '../../components/button';
@@ -28,7 +29,10 @@ interface SignInprops{
 
 function Signin(){
   const formRef = useRef<FormHandles>(null);
+
   const {signIn}= useAuth();
+
+  const history = useHistory();
 
   const handleSubmit = useCallback(async(data:SignInprops)=>{
     try{
@@ -48,18 +52,24 @@ function Signin(){
         abortEarly:false,
       });
 
-      signIn({
+      await signIn({
         email:data.email,
         password:data.password
       });
 
-    }catch(err){
-      console.log(err);
-      const errors = getValidationErrors(err);
 
-      formRef.current?.setErrors(errors);
+      history.push('/');
+
+    }catch(err){
+      if(err instanceof Yup.ValidationError){
+        const erros = getValidationErrors(err);
+        formRef.current?.setErrors(erros);
+        return;
+      }
+
+      console.log(err.response.data.result.mensagem)
     }
-  },[signIn]);
+  },[signIn, history]);
 
   return(
     <Container>

@@ -1,9 +1,8 @@
 import {Form} from '@unform/web';
-import {useHistory} from 'react-router-dom';
+import {useHistory, useLocation} from 'react-router-dom';
 import { FiSearch } from 'react-icons/fi';
 
 import imgDogToy from '../../assets/dogToy.png'
-import imgPet from '../../assets/imgPet.png';
 import imgType from '../../assets/imgType.png';
 import imgStatus from '../../assets/imgStatus.png';
 import imgSex from '../../assets/imgSex.png';
@@ -26,12 +25,15 @@ import {
   ContainerPagination,
   ButtonSearch
  } from './styles';
+import { useEffect, useState } from 'react';
+import api from '../../services/api';
 
  const optionsType = [
   {value:'dog', label:'Cachorros.'},
   {value:'cat', label:'Gatos.'},
   {value:'all', label:'Todos.'},
 ]
+
 const optionsStatus = [
   {value:'adoption', label:'Para adoção.'},
   {value:'lost', label:'Perdido.'},
@@ -49,12 +51,56 @@ const optionsPhase = [
   {value:'adult', label:'Adulto.'},
   {value:'all', label:'Todos.'},
 ]
+
+
+interface RouteParms{
+  species: string;
+  uf: string;
+  city:string;
+  typeSearch:string;
+  page:number;
+}
+
+interface PetProps{
+  idPet:number;
+  name:string;
+  uf:string;
+  city:string;
+  phase:string;
+  photo:string;
+  sex:string;
+  status:string;
+}
 const ListPets: React.FC = () => {
   const history = useHistory();
+
+  const route = useLocation();
+  const data = route.state as RouteParms;
+
+  const [pets, setPets] = useState<PetProps[]>([])
 
   function handleNavigationListPet(){
     history.push('seeDetailsPet');
   }
+
+  useEffect(()=>{
+    api.get('v1/searchLocation',{
+      params:{
+        species:data.species,
+        city:data.city,
+        uf:data.uf,
+        typeSearch:data.typeSearch,
+        page:data.page
+      }
+    })
+      .then(res=>{
+        console.log(res.data);
+        setPets(res.data);
+
+      }).catch(err => {
+        console.log(err.response.data.result.mensagem);
+      })
+  },[data])
 
   return(
     <>
@@ -118,204 +164,20 @@ const ListPets: React.FC = () => {
         </ContainerFilter>
 
         <ContainerCards>
-        <CardPets
-          namePet='Logan'
-          sexy='F'
-          imagePet={imgPet}
-          city='Senhor do Bonfim'
-          status='para Adoção'
-          size='P'
-          onClick={handleNavigationListPet}
-        />
+          {pets.map(pet=>(
+            <CardPets
+              key={pet.idPet}
+              namePet={pet.name}
+              sexy='F'
+              imagePet={pet.photo}
+              city={pet.city}
+              status={pet.status === 'adoption' ? 'Para adoção' : 'Perdido'}
+              size={pet.phase === 'adult' ? 'P' : 'M'}
+              onClick={handleNavigationListPet}
+            />
+          ))}
 
-        <CardPets
-          namePet='Logan'
-          sexy='F'
-          imagePet={imgPet}
-          city='Senhor do Bonfim'
-          status='para Adoção'
-          size='P'
-          onClick={handleNavigationListPet}
-        />
 
-        <CardPets
-          namePet='Logan'
-          sexy='F'
-          imagePet={imgPet}
-          city='Senhor do Bonfim'
-          status='para Adoção'
-          size='P'
-          onClick={handleNavigationListPet}
-        />
-
-        <CardPets
-          namePet='Logan'
-          sexy='F'
-          imagePet={imgPet}
-          city='Senhor do Bonfim'
-          status='para Adoção'
-          size='P'
-          onClick={handleNavigationListPet}
-        />
-
-        <CardPets
-          namePet='Logan'
-          sexy='F'
-          imagePet={imgPet}
-          city='Senhor do Bonfim'
-          status='para Adoção'
-          size='P'
-          onClick={handleNavigationListPet}
-        />
-
-        <CardPets
-          namePet='Logan'
-          sexy='F'
-          imagePet={imgPet}
-          city='Senhor do Bonfim'
-          status='para Adoção'
-          size='P'
-          onClick={handleNavigationListPet}
-        />
-
-        <CardPets
-          namePet='Logan'
-          sexy='F'
-          imagePet={imgPet}
-          city='Senhor do Bonfim'
-          status='para Adoção'
-          size='P'
-          onClick={handleNavigationListPet}
-        />
-
-        <CardPets
-          namePet='Logan'
-          sexy='F'
-          imagePet={imgPet}
-          city='Senhor do Bonfim'
-          status='para Adoção'
-          size='P'
-          onClick={handleNavigationListPet}
-        />
-
-        <CardPets
-          namePet='Logan'
-          sexy='F'
-          imagePet={imgPet}
-          city='Senhor do Bonfim'
-          status='para Adoção'
-          size='P'
-          onClick={handleNavigationListPet}
-        />
-
-        <CardPets
-          namePet='Logan'
-          sexy='F'
-          imagePet={imgPet}
-          city='Senhor do Bonfim'
-          status='para Adoção'
-          size='P'
-          onClick={handleNavigationListPet}
-        />
-        <CardPets
-          namePet='Logan'
-          sexy='F'
-          imagePet={imgPet}
-          city='Senhor do Bonfim'
-          status='para Adoção'
-          size='P'
-          onClick={handleNavigationListPet}
-        />
-
-        <CardPets
-          namePet='Logan'
-          sexy='F'
-          imagePet={imgPet}
-          city='Senhor do Bonfim'
-          status='para Adoção'
-          size='P'
-          onClick={handleNavigationListPet}
-        />
-
-        <CardPets
-          namePet='Logan'
-          sexy='F'
-          imagePet={imgPet}
-          city='Senhor do Bonfim'
-          status='para Adoção'
-          size='P'
-          onClick={handleNavigationListPet}
-        />
-
-        <CardPets
-          namePet='Logan'
-          sexy='F'
-          imagePet={imgPet}
-          city='Senhor do Bonfim'
-          status='para Adoção'
-          size='P'
-          onClick={handleNavigationListPet}
-        />
-
-        <CardPets
-          namePet='Logan'
-          sexy='F'
-          imagePet={imgPet}
-          city='Senhor do Bonfim'
-          status='para Adoção'
-          size='P'
-          onClick={handleNavigationListPet}
-        />
-
-        <CardPets
-          namePet='Logan'
-          sexy='F'
-          imagePet={imgPet}
-          city='Senhor do Bonfim'
-          status='para Adoção'
-          size='P'
-          onClick={handleNavigationListPet}
-        />
-
-        <CardPets
-          namePet='Logan'
-          sexy='F'
-          imagePet={imgPet}
-          city='Senhor do Bonfim'
-          status='para Adoção'
-          size='P'
-          onClick={handleNavigationListPet}
-        />
-
-        <CardPets
-          namePet='Logan'
-          sexy='F'
-          imagePet={imgPet}
-          city='Senhor do Bonfim'
-          status='para Adoção'
-          size='P'
-          onClick={handleNavigationListPet}
-        />
-
-        <CardPets
-          namePet='Logan'
-          sexy='F'
-          imagePet={imgPet}
-          city='Senhor do Bonfim'
-          status='para Adoção'
-          size='P'
-          onClick={handleNavigationListPet}
-        />
-
-        <CardPets
-          namePet='Logan'
-          sexy='F'
-          imagePet={imgPet}
-          city='Senhor do Bonfim'
-          status='para Adoção'
-          size='P'
-          onClick={handleNavigationListPet}
-        />
         </ContainerCards>
         <ContainerPagination/>
       </Container>

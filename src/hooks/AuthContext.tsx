@@ -1,9 +1,17 @@
 import React,{createContext, useCallback, useContext, useState}  from 'react';
 import api from '../services/api';
 import {useHistory} from 'react-router-dom';
+
+interface UserProps{
+  idUser:number;
+  photoProfile:string;
+  name:string;
+  lastName:string;
+}
+
 interface AuthState{
   token:string;
-  user:object;
+  user:UserProps;
 }
 
 interface SignInCredentials{
@@ -12,9 +20,10 @@ interface SignInCredentials{
 }
 
 interface AuthContextData{
-  user:object;
+  user:UserProps;
   signIn(credentials:SignInCredentials):Promise<void>;
   signOut():void;
+  token:string;
 }
 
 export const  AuthContext = createContext<AuthContextData>(
@@ -66,7 +75,7 @@ export const AuthProvider:React.FC =({children}) =>{
 
 
   return(
-    <AuthContext.Provider value={{user:data.user,signIn,signOut}}>
+    <AuthContext.Provider value={{token:data.token,user:data.user,signIn,signOut}}>
       {children}
     </AuthContext.Provider>
   )

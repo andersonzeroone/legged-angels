@@ -75,6 +75,7 @@ const customStyles = {
     width:'50%'
   }
 };
+
 const SeeDetailsPet:React.FC =() =>{
   const history = useHistory();
 

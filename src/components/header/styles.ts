@@ -31,9 +31,8 @@ export const ContainerMenu = styled.div`
   flex-direction:row;
   align-items:center;
   justify-content:flex-end;
-  width:50%;
+  width:60%;
 `;
-
 
 export const ButtonNav = styled.li``;
 
@@ -104,3 +103,55 @@ export const ButtonSignUp = styled(Link)`
   }
 
 `;
+
+export const ContainerImageNameUser = styled.div`
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+
+
+`;
+
+export const ImageUser = styled.img`
+  height:40px;
+  width:40px;
+  border:1px solid #000;
+  border-radius:20px;
+  margin:0 10px;
+  background: #000;
+`;
+
+export const ContainerName = styled.div`
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+`;
+
+export const NameUser = styled.p`
+  font-size:1.2rem;
+  margin-right:15px;
+  color:#000;
+  font-family:'Mulish', serif;
+  font-weight:bold;
+`;
+
+export const ContainerSignOut = styled.button`
+  background: none;
+  border:0;
+
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+
+  font-size:1.1rem;
+  margin-right:15px;
+  color:red;
+  font-family:'Mulish', serif;
+  font-weight:bold;
+`;
+
+
+
+

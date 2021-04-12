@@ -15,8 +15,9 @@ export const  Container = styled.div`
 
 export const Imagepet = styled.img`
   width:100%;
-  border-top-left-radius:10px;
-  border-top-right-radius:10px;
+  height:150px;
+  border-radius:10px;
+
 `
 
 export const ImageSexyPet = styled.img`

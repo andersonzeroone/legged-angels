@@ -4,6 +4,9 @@ import {Form} from '@unform/web';
 import {FormHandles} from '@unform/core';
 import axios from 'axios';
 import {useHistory} from 'react-router-dom';
+import {useAuth} from '../../hooks/AuthContext';
+import Modal from 'react-modal';
+import { FiX } from 'react-icons/fi';
 
 import {
   ConatinerMain,
@@ -17,6 +20,9 @@ import {
   TextSearchPet,
   ContainerDivisor,
   ContainerSearch,
+  ContainerTypeSearch,
+  LabelInputRadio,
+  InputRadio,
   ContainerSelectFilterSearch,
   ButtonSearch,
   Divisor,
@@ -25,24 +31,33 @@ import {
   ContentSlidePet,
   TitleLostPet,
   TextCountPetsLost,
+  ContainerFilterPetLost,
+  TextFilterPetLost,
   ContainerPositionMapOngs,
   TextPositionsMapOngs,
   ContainerMap,
+  ContainerModal,
+  HeaderModal,
+  TitleModal,
+  MainModal,
+  TextModal,
+  FooterModal,
+  ButtonCloseModal,
   Footer,
-  ImageFooterBackgound
+  ImageFooterBackgound,
 
  } from './styles';
 
 import imgDogCat from '../../assets/ImgDogCat.png';
 import imgDog from '../../assets/ImgDog.png';
 import divisor from '../../assets/divisor.png';
-import imgPet from '../../assets/imgPet.png';
 import backGroundFooter from '../../assets/imgfooter.png';
 
 import Button from '../../components/button';
 import CardPets from '../../components/CardPet';
 import Select from '../../components/select';
 import Header from '../../components/header';
+import api from '../../services/api';
 
 interface IbgeUfResponse{
   sigla:string;
@@ -54,18 +69,74 @@ interface IbgeCityResponse{
 const optionsType = [
   {value:'dog', label:'Cachorros'},
   {value:'cat', label:'Gatos'},
-  {value:'ong', label:'ONGs '},
+  {value:'all', label:'Cachorros e Gatos'},
 ]
+
+interface FIlerPetsProps{
+  species?:string;
+  city: string;
+  uf: string;
+}
+
+interface PetProps{
+  idPet:number;
+  name:string;
+  uf:string;
+  city:string;
+  phase:string;
+  photo:string;
+  sex:string;
+  status:string;
+}
+
+interface FilterLostProps{
+  uf:string;
+  city:string;
+}
+
+const customStyles = {
+  content : {
+    top  : '50%',
+    left : '50%',
+    right: 'auto',
+    bottom : 'auto',
+    marginRight : '-50%',
+    transform : 'translate(-50%, -50%)',
+    borderRadius:20,
+    width:'50%'
+  }
+};
 
 function Home(){
   const history = useHistory();
 
+  const {token} = useAuth();
+
   const [position, setPosition] = useState({ lat:-11.2020652,lng:-40.521877});
 
   const formRef = useRef<FormHandles>(null);
+
   const [ufs, setUfs] = useState<string[]>([]);
   const [selectedUf, setSelectedUf] = useState('');
   const [cities,setCities] = useState<string[]>([]);
+
+  const [typeSearch,seTypeSearch] = useState('pet');
+  const [typeSearchPet,setTypeSearchPet] = useState(true);
+
+  const [petLost,setPetLost] = useState<PetProps[]>([])
+
+  const [filterPetLost, setFilterPetLost] = useState(false);
+
+  const [modalIsOpen,setIsOpen] = useState(false);
+
+  const [erros,setErros] = useState('');
+
+  useEffect(()=>{
+    typeSearch === 'pet' || typeSearch === '' ? (
+      setTypeSearchPet(true)
+    ): setTypeSearchPet(false)
+
+  },[typeSearch]);
 
   useEffect(()=>{
     axios.get<IbgeUfResponse[]>('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
@@ -74,19 +145,28 @@ function Home(){
        setUfs(ufInitials)
      })
 
- },[]);
+  },[]);
 
- useEffect(() =>{
+  useEffect(() =>{
    axios.get<IbgeCityResponse[]>(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedUf}/municipios`)
      .then(response =>{
        const cityName = response.data.map( city => city.nome);
        setCities(cityName);
      })
- },[selectedUf]);
+  },[selectedUf]);
+
+  useEffect(()=>{
+    api.get('v1/pets/lost/oldest')
+      .then(res =>{
+        setPetLost(res.data);
+      }).catch(err =>{
+        console.log(err.response.data.result.mensagem)
+      });
+
+  },[]);
 
   function handleSelect(ev:any){
     const value = ev.value;
-    console.log(value)
     setSelectedUf(value);
   }
 
@@ -110,18 +190,59 @@ function Home(){
 
   }
 
-  const getData = useCallback((data:object)=>{
-    console.log(data);
-  },[]);
+  function handleFilterPetsOns(data:FIlerPetsProps){
+    const dataPet = {typeSearch,page:1,...data}
+    const {uf, city,species} = data;
+
+    console.log(dataPet)
+    if(species === ''){
+      setErros('Por favor, selecione um tipo de espécie para pesquisa.');
+      setIsOpen(true);
+      return;
+    }
+
+    if(uf === '' || city === ''){
+      setErros('Por favor, selecione uma UF e cidade.');
+      setIsOpen(true);
+      return;
+    }
+
+    typeSearch  === 'pet'? (
+      history.push('listPets',{...dataPet})
+    ): history.push('listPets',{uf,city,typeSearch,page:1})
+
+  }
 
   function handleNavigationListPet(){
     history.push('listPets');
   }
 
+  const getDataPetsLost = useCallback(async(data:FilterLostProps)=>{
+    console.log('aui');
+    const {uf, city}= data;
+
+    if(uf === '' || city === ''){
+      setErros('Por favor, selecione uma UF e cidade.');
+      setIsOpen(true);
+      return;
+    }
+
+  },[]);
+
+  const  handleFilterLost = useCallback(()=>{
+    setFilterPetLost((state) => !state)
+  },[]);
+
+  function handleisModal(){
+    setIsOpen((state) => !state);
+  }
+
   return(
     <ConatinerMain>
     <Container>
-      <Header/>
+      <Header
+        isUser={!!token}
+      />
       <Content>
         <ContainerMotivation>
           <Title>Traga Felicidade
@@ -138,24 +259,48 @@ function Home(){
       </Content>
 
       <ContainerSearch>
-        <TextSearchPet>Procure por um pet</TextSearchPet>
+        <TextSearchPet>Procure por um pet ou ONG</TextSearchPet>
+        <ContainerTypeSearch>
+          <LabelInputRadio>
+            <InputRadio
+              name="status"
+              type="radio"
+              value="pet"
+              onChange={(changeEvent)=> seTypeSearch(changeEvent.target.value)}
+            />
 
+              Pets
+            </LabelInputRadio>
+
+            <LabelInputRadio>
+              <InputRadio
+                name="status"
+                type="radio"
+                value="ong"
+                onChange={(changeEvent)=> seTypeSearch(changeEvent.target.value)}
+              />
+              Ongs
+            </LabelInputRadio>
+        </ContainerTypeSearch>
         <ContainerSelectFilterSearch>
           <Form
             ref={formRef}
-            onSubmit={getData}
+            onSubmit={handleFilterPetsOns}
             style={{
               display:'flex',
               width:'100%',
 
             }}
           >
-            <Select
-              name='type'
-              placeholder='Selecione um tipo'
-              options={optionsType}
-              style={{width:'10%',marginRight:10}}
-            />
+            {typeSearchPet &&
+              <Select
+                name='species'
+                placeholder='Selecione um tipo'
+                options={optionsType}
+                style={{width:'10%',marginRight:10}}
+              />
+            }
+
             <Select
               name='uf'
               placeholder='Selecione sua UF'
@@ -196,6 +341,7 @@ function Home(){
           </SubTitle>
 
           <Button
+            onClick={()=> history.push('addnewpet')}
             style={{width:200}}
           >
             Cadastrar pet
@@ -209,59 +355,67 @@ function Home(){
         </ContainerTitleLostPet>
 
         <ContentSlidePet>
+          {petLost.map(pet=>(
+            <CardPets
+              key={pet.idPet}
+              namePet={pet.name}
+              sexy='F'
+              imagePet={pet.photo}
+              city={`${pet.city} - ${pet.uf}`}
+              status={pet.status === 'adoption' ? 'Para adoção' : 'Perdido'}
+              size={pet.phase === 'adult' ? 'M' : 'G'}
+              onClick={handleNavigationListPet}
+            />
+          ))}
 
-          <CardPets
-            namePet='Logan'
-            sexy='F'
-            imagePet={imgPet}
-            city='Senhor do Bonfim'
-            status='para Adoção'
-            size='P'
-            onClick={handleNavigationListPet}
-          />
-
-          <CardPets
-            namePet='Logan'
-            sexy='F'
-            imagePet={imgPet}
-            city='Senhor do Bonfim'
-            status='para Adoção'
-            size='P'
-            onClick={handleNavigationListPet}
-          />
-          <CardPets
-            namePet='Logan'
-            sexy='F'
-            imagePet={imgPet}
-            city='Senhor do Bonfim'
-            status='para Adoção'
-            size='P'
-            onClick={handleNavigationListPet}
-          />
-          <CardPets
-            namePet='Logan'
-            sexy='F'
-            imagePet={imgPet}
-            city='Senhor do Bonfim'
-            status='para Adoção'
-            size='P'
-            onClick={handleNavigationListPet}
-          />
-          <CardPets
-            namePet='Logan'
-            sexy='F'
-            imagePet={imgPet}
-            city='Senhor do Bonfim'
-            status='para Adoção'
-            size='P'
-            onClick={handleNavigationListPet}
-          />
         </ContentSlidePet>
 
-        <TextCountPetsLost>Quantidade de pets perdidos  90.</TextCountPetsLost>
-        <Button style={{width:200}}>
-            Ver mais.
-        </Button>
+        <TextCountPetsLost>Quantidade de pets perdidos {petLost.length}.</TextCountPetsLost>
+        {filterPetLost ? (
+          <>
+            <TextFilterPetLost>Selecione um estado e cidade.</TextFilterPetLost>
+
+            <ContainerFilterPetLost>
+              <Form
+                ref={formRef}
+                onSubmit={getDataPetsLost}
+                style={{
+                  display:'flex',
+                  width:'40%',
+
+                }}
+              >
+
+                <Select
+                  name='uf'
+                  placeholder='Selecione sua UF'
+                  options={ufs.map(uf=>({label:uf,value:uf}))}
+                  onChange={handleSelect}
+                />
+
+                <Select
+                  name='city'
+                  placeholder='Selecione sua cidade'
+                  options={cities.map(citie=>({label:citie,value:citie}))}
+                />
+
+                <ButtonSearch type='submit'>
+                  Buscar pets
+                </ButtonSearch>
+
+              </Form>
+            </ContainerFilterPetLost>
+          </>
+          ): (
+            <>
+            <Button
+              onClick={handleFilterLost}
+              style={{width:200}}
+            >
+                Ver mais.
+              </Button>
+            </>
+          ) }
       </ContainerLostPet>
 
       <ContainerPositionMapOngs>
@@ -291,6 +445,28 @@ function Home(){
         </ContainerMap>
       </ContainerPositionMapOngs>
 
+      <ContainerModal>
+       <Modal
+        isOpen={modalIsOpen}
+        style={customStyles}
+        contentLabel="Example Modal"
+       >
+          <HeaderModal>
+            <TitleModal>Por favor complete os dados</TitleModal>
+            </HeaderModal>
+          <MainModal>
+            <TextModal>* {erros}</TextModal>
+          </MainModal>
+          <FooterModal>
+            <ButtonCloseModal
+              onClick={handleisModal}
+            >
+              <FiX size={20} style={{marginRight:10}}/>
+              Fechar
+            </ButtonCloseModal>
+          </FooterModal>
+       </Modal>
+      </ContainerModal>
     </Container>
     <Footer>
       <ImageFooterBackgound
