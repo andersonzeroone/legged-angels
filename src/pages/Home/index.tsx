@@ -208,15 +208,15 @@ function Home(){
 
     typeSearch  === 'pet'? (
       history.push('listPets',{...dataPet})
-    ): history.push('listPets',{uf,city,typeSearch,page:1})
+    ): history.push('ListOngs',{uf,city,typeSearch,page:1})
 
   }
 
-  function handleNavigationListPet(){
-    history.push('listPets');
+  function handleNavigationSeeDetailsPet(idPet:number){
+    history.push('seeDetailsPet',{idPet});
   }
 
-  const getDataPetsLost = useCallback(async(data:FilterLostProps)=>{
+  const getDataPetsLost = useCallback((data:FilterLostProps)=>{
     const {uf, city}= data;
 
     if(uf === '' || city === ''){
@@ -363,7 +363,7 @@ function Home(){
               city={`${pet.city} - ${pet.uf}`}
               status={pet.status === 'adoption' ? 'Para adoção' : 'Perdido'}
               size={pet.phase === 'adult' ? 'M' : 'G'}
-              onClick={handleNavigationListPet}
+              onClick={() => handleNavigationSeeDetailsPet(pet.idPet)}
             />
           ))}
 

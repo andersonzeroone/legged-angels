@@ -89,3 +89,74 @@ export const ContainerCards = styled.div`
 `;
 
 export const ContainerPagination = styled.div``;
+
+
+
+export const  ContainerModal = styled.div``;
+
+export const HeaderModal = styled.div`
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+`;
+
+export const TitleModal = styled.p`
+  color:#104B60;
+  font-size:2.5rem;
+  font-family:'Mulish', serif;
+  font-weight:900;
+`;
+
+export const MainModal = styled.div`
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  padding:0 20px;
+`;
+
+export const TextModal = styled.p`
+  color:#104B60;
+  font-size:1.8rem;
+  font-family:'Mulish', serif;
+  margin-top:20px;
+`;
+
+export const FooterModal = styled.div`
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+
+  margin:80px 0 70px;
+`;
+
+export const ButtonCloseModal = styled.button`
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  text-decoration:none;
+
+  background:#997308;
+  height:45px;
+  border-radius:10px;
+  border:0;
+
+  padding: 0 15px;
+
+  height:40px;
+  width:135px;
+
+  color:#FFF;
+  font-size:1.3rem;
+  font-family:'Mulish', serif;
+  font-weight:bold;
+
+  transition: background-color 0.2s;
+
+  &:hover{
+    background:${shade(0.2,'#5390A6')};
+  }
+
+`;

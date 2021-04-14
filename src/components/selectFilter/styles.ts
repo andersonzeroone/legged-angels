@@ -6,7 +6,7 @@ export const Container = styled.div`
   flex-direction:row;
   align-items:center;
   padding-left:10px;
-  width:100%;
+  /* width:100%; */
   border-radius:20px;
   box-shadow: 0px 4px 4px 1px rgb(141, 140, 140);
   margin-right:20px;
@@ -20,7 +20,7 @@ export const ReactSelects = styled(ReactSelect)`
     /* border:1px solid #CC9E1F; */
     /* padding:8px; */
     border:0;
-    width:150px;
+    width:200px;
   }
 
   .css-1pahdxg-control{

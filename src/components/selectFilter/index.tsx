@@ -2,14 +2,13 @@ import { useRef, useEffect} from 'react';
 import { useField } from '@unform/core';
 import { OptionTypeBase, Props as SelectProps,} from 'react-select';
 
-import {Container,ReactSelects,Icon} from './styles';
+import {Container,ReactSelects} from './styles';
 interface Props extends SelectProps<OptionTypeBase> {
   name: string;
-  iconImg:string;
 }
 
 
-export default function Select({ name,iconImg, ...rest }: Props) {
+export default function Select({ name, ...rest }: Props) {
   const selectRef = useRef(null);
   const { fieldName, defaultValue, registerField, error } = useField(name);
   useEffect(() => {
@@ -32,7 +31,6 @@ export default function Select({ name,iconImg, ...rest }: Props) {
   }, [fieldName, registerField, rest.isMulti]);
   return (
     <Container>
-      <Icon src={iconImg}/>
       <ReactSelects
         defaultValue={defaultValue}
         ref={selectRef}

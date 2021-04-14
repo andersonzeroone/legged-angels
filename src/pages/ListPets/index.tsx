@@ -25,7 +25,7 @@ import {
   ContainerPagination,
   ButtonSearch
  } from './styles';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import api from '../../services/api';
 
  const optionsType = [
@@ -79,8 +79,9 @@ const ListPets: React.FC = () => {
 
   const [pets, setPets] = useState<PetProps[]>([])
 
-  function handleNavigationListPet(){
-    history.push('seeDetailsPet');
+  function handleNavigationSeeDetailsPet(idPet:number){
+    console.log('id', idPet)
+    history.push('seeDetailsPet',{idPet});
   }
 
   useEffect(()=>{
@@ -102,6 +103,15 @@ const ListPets: React.FC = () => {
       })
   },[data])
 
+  const handleData = useCallback(async(data:object)=>{
+    console.log(data)
+    try{
+
+    }catch(err){
+
+    }
+  },[]);
+
   return(
     <>
       <Container>
@@ -122,7 +132,7 @@ const ListPets: React.FC = () => {
 
         <ContainerFilter>
            <Form
-            onSubmit={()=>{}}
+            onSubmit={handleData}
             style={{
               display:'flex',
               // width:'70%',
@@ -156,7 +166,7 @@ const ListPets: React.FC = () => {
             placeholder='Fase'
           />
 
-          <ButtonSearch to='/'>
+          <ButtonSearch type='submit'>
             <FiSearch size={20} style={{marginRight:5}}/>
             Pesquisar pet
           </ButtonSearch>
@@ -173,7 +183,7 @@ const ListPets: React.FC = () => {
               city={pet.city}
               status={pet.status === 'adoption' ? 'Para adoção' : 'Perdido'}
               size={pet.phase === 'adult' ? 'P' : 'M'}
-              onClick={handleNavigationListPet}
+              onClick={()=> handleNavigationSeeDetailsPet(pet.idPet)}
             />
           ))}
 

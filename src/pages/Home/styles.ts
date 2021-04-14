@@ -112,8 +112,6 @@ export const ContainerSelectFilterSearch = styled.div`
   border:4px solid #FFD04D;
   background: #FFD04D;
   /* border-color:#FFD04D; */
-
-
 `;
 
 export const ButtonSearch  = styled.button`

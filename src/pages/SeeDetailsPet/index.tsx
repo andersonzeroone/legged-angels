@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import {useHistory} from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import {useHistory, useLocation} from 'react-router-dom';
 import {FiArrowLeft, FiMail, FiMessageCircle, FiX} from "react-icons/fi";
 import Modal from 'react-modal';
 
@@ -8,14 +8,13 @@ import Footer from '../../components/footer';
 import Button from '../../components/button';
 import CardPets from '../../components/CardPet';
 
-import imgPet from '../../assets/ImgDogCat.png'
 import imgCat from '../../assets/imgPet.png'
-import imgDog from '../../assets/ImgDog.png'
+
 import imgSexPetM from '../../assets/imgSexo.png';
 import divider from '../../assets/line.png';
 import iconAdoption from '../../assets/iconAdoption.png';
 import imgTypeDog from '../../assets/imgTypeDog.png';
-
+import api from '../../services/api';
 
 import {
   Container,
@@ -63,6 +62,7 @@ import {
 
 } from "./styles";
 
+
 const customStyles = {
   content : {
     top  : '50%',
@@ -76,20 +76,104 @@ const customStyles = {
   }
 };
 
+interface DetailsPetProps{
+  idPet:number;
+}
+
+interface SeeDetailsPetProps{
+  idPet:number
+  name:string
+  sex:string
+  status:string
+  species:string
+  phase:string;
+  castration:string;
+  race:string;
+  vaccination:string;
+  eyeColor:string;
+  hairColor:string;
+  feature:string
+  city:string;
+  uf:string;
+  photos: Array<{
+    photo:string,
+    idPhoto:string
+  }>;
+  userType:string;
+  idUser:number;
+  nameUser:string;
+  lastNameUser:string;
+}
+
+interface UserProps{
+  idUser: number;
+  name:string;
+  lastName:string;
+  whatsapp:string;
+  email:string;
+  city:string;
+  uf:string;
+  postalCode:string;
+  street:string;
+  district:string;
+  addressNumber:string;
+  complement:string;
+}
+
+// interface PetProps{
+//   idPet:number;
+//   name:string;
+//   uf:string;
+//   city:string;
+//   phase:string;
+//   photo:string;
+//   sex:string;
+//   status:string;
+// }
+
 const SeeDetailsPet:React.FC =() =>{
+
+  const route = useLocation();
+  const {idPet} = route.state as DetailsPetProps;
+
+  console.log('idParm', idPet)
   const history = useHistory();
 
   const [modalIsOpen,setIsOpen] = useState(false);
 
-  const imgs = [
-    {img:imgCat},
-    {img:imgCat},
-    {img:imgDog},
-    {img:imgPet},
-    {img:imgCat},
-  ]
   // const [previewImages, setPreviewImages] = useState<string[]>([]);
-  const [activeImageindex,setActiveImageindex] = useState(0);
+  const [activeImageindex,setActiveImageindex] = useState<number>(0);
+
+  const [detailsPet, setDetailsPet] = useState<SeeDetailsPetProps>(
+    {} as SeeDetailsPetProps
+  );
+
+  const [user, setUser] = useState<UserProps>({} as UserProps);
+
+  useEffect(()=>{
+    api.get(`/v1/pets/show/${idPet}`)
+      .then( res =>{
+        setDetailsPet(res.data);
+      }).catch(err=>{
+        console.log('resData', err.response.data.result.mensagem);
+      })
+
+  },[idPet]);
+
+  useEffect(()=>{
+    api.get(`/v1/adoption/showUser`,{
+      params:{
+        idUser:detailsPet.idUser
+      }
+    })
+      .then(res =>{
+        setUser(res.data);
+      }).catch(err =>{
+        console.log(err.response.data.result.mensagem);
+      });
+  },[detailsPet.idUser]);
+
+
 
   function handleNavigationListPet(){
     history.push('listPets');
@@ -111,27 +195,30 @@ const SeeDetailsPet:React.FC =() =>{
         </ContainerButttonGoBack>
 
         <ContainerNamePet>
-          <NamePet>Conheça, Logan</NamePet>
+          <NamePet>Conheça, {detailsPet.name}</NamePet>
           <ImageTypePet src={imgTypeDog}/>
         </ContainerNamePet>
         <Content>
           <ContainerImages>
-            <ImagePreview src={imgs[activeImageindex].img}/>
-              <ContentImage>
-                {
-                  imgs.map((image,index)=>(
+            { detailsPet.photos ?(
+              <ImagePreview src={detailsPet.photos[activeImageindex].photo}/>
+            ):null}
+
+            <ContentImage>
+              {  detailsPet.photos ? (
+                  detailsPet.photos.map((image,index)=>(
                     <ButtonImage
                       className={activeImageindex === index ? "active" : ''}
                       key={index}
                       onClick={()=> {
                         setActiveImageindex(index);
                       }}
-                    >
-                      <Image src={image.img}/>
+                      >
+                      <Image src={image.photo}/>
                     </ButtonImage>
-
                   ))
-                }
+                ): null}
+
             </ContentImage>
           </ContainerImages>
 
@@ -139,19 +226,23 @@ const SeeDetailsPet:React.FC =() =>{
             <ContainerNameSex>
               <ContentInfo>
                 <Label>Nome:</Label>
-                <Text>Logan</Text>
+                <Text>{detailsPet.name}</Text>
               </ContentInfo>
 
               <ContentInfo>
                 <Label>Sexo:</Label>
-                <Text>Macho</Text>
+                <Text>{detailsPet.sex === 'male' ? 'Macho': 'Femêa'}</Text>
                 <ImageSex src={imgSexPetM}/>
               </ContentInfo>
             </ContainerNameSex>
 
             <ContentInfo>
               <Label>Status:</Label>
-              <TextStatus>Para adoção</TextStatus>
+              <TextStatus
+                style={{
+                  color:(detailsPet.status === 'lost'? '#c53030': '#FFD04D')
+              }}
+              >{detailsPet.status}</TextStatus>
             </ContentInfo>
           </ContainerInfo>
 
@@ -164,27 +255,27 @@ const SeeDetailsPet:React.FC =() =>{
           <ContainerInfo>
             <ContentInfo>
               <Label>Espécie:</Label>
-              <Text>Gato</Text>
+              <Text>{detailsPet.species === 'dog'?'Cachorro' : 'Gato'}</Text>
             </ContentInfo>
 
             <ContentInfo>
               <Label>Fase:</Label>
-              <Text>Filhote</Text>
+              <Text>{detailsPet.phase}</Text>
             </ContentInfo>
 
             <ContentInfo>
               <Label>Castração:</Label>
-              <Text>Sem informação</Text>
+              <Text>{detailsPet.castration}</Text>
             </ContentInfo>
 
             <ContentInfo>
               <Label>Raça:</Label>
-              <Text>Pé duro</Text>
+              <Text>{detailsPet.race}</Text>
             </ContentInfo>
 
             <ContentInfo>
               <Label>Vacinação:</Label>
-              <Text>vacidado</Text>
+              <Text>{detailsPet.vaccination}</Text>
             </ContentInfo>
           </ContainerInfo>
 
@@ -193,18 +284,19 @@ const SeeDetailsPet:React.FC =() =>{
           <ContainerInfo>
             <ContentInfo>
               <Label>Cor dos olhos:</Label>
-              <Text>Preto</Text>
+              <Text>{detailsPet.eyeColor}</Text>
             </ContentInfo>
 
             <ContentInfo>
               <Label>Cor do pelo:</Label>
-              <Text>Branco</Text>
+              <Text>{detailsPet.hairColor}</Text>
             </ContentInfo>
 
             <ContentInfo>
               <Label>Deficiência ou característica:</Label>
-              <Text>Sem</Text>
+
             </ContentInfo>
+            <Text> * {detailsPet.feature}</Text>
           </ContainerInfo>
 
           <Legend>Informações sobre doação:</Legend>
@@ -212,12 +304,12 @@ const SeeDetailsPet:React.FC =() =>{
           <ContainerInfo>
             <ContentInfo>
               <Label>Doador:</Label>
-              <Text>Carlos</Text>
+              <Text>{user.email}</Text>
             </ContentInfo>
 
             <ContentInfo>
               <Label>Cidade:</Label>
-              <Text>Senhor do bonfim - BA</Text>
+              <Text>{detailsPet.city} - {detailsPet.uf}</Text>
             </ContentInfo>
           </ContainerInfo>
 
@@ -246,42 +338,6 @@ const SeeDetailsPet:React.FC =() =>{
               onClick={handleNavigationListPet}
             />
 
-            <CardPets
-              namePet='Logan'
-              sexy='F'
-              imagePet={imgCat}
-              city='Senhor do Bonfim'
-              status='para Adoção'
-              size='P'
-              onClick={handleNavigationListPet}
-            />
-            <CardPets
-              namePet='Logan'
-              sexy='F'
-              imagePet={imgCat}
-              city='Senhor do Bonfim'
-              status='para Adoção'
-              size='P'
-              onClick={handleNavigationListPet}
-            />
-            <CardPets
-              namePet='Logan'
-              sexy='F'
-              imagePet={imgCat}
-              city='Senhor do Bonfim'
-              status='para Adoção'
-              size='P'
-              onClick={handleNavigationListPet}
-            />
-            <CardPets
-              namePet='Logan'
-              sexy='F'
-              imagePet={imgPet}
-              city='Senhor do Bonfim'
-              status='para Adoção'
-              size='P'
-              onClick={handleNavigationListPet}
-            />
           </ContentSlidePet>
 
           <TextCountPetsLost>Quantidade de pets perdidos  90.</TextCountPetsLost>
@@ -307,12 +363,12 @@ const SeeDetailsPet:React.FC =() =>{
 
               <ContainerInfoModal>
                 <LabelModal>Cidade:</LabelModal>
-                <TextModal>Senhor do Bonfim - BA</TextModal>
+                <TextModal>{user.city} - {user.uf}</TextModal>
               </ContainerInfoModal>
 
               <ContainerInfoModal>
                 <LabelModal>CEP:</LabelModal>
-                <TextModal>48970-000</TextModal>
+                <TextModal>74 9988988</TextModal>
               </ContainerInfoModal>
 
               <ContainerInfoModal>
@@ -333,7 +389,7 @@ const SeeDetailsPet:React.FC =() =>{
 
               <ContainerInfoModal>
                 <LabelModal>Whatsapp:</LabelModal>
-                <TextContatcModal>(74) 9 9999-8888</TextContatcModal>
+                <TextContatcModal></TextContatcModal>
                 <ButtonWhats>
                   <FiMessageCircle size={20} style={{marginRight:10}}/>
                   Entrar em contato
@@ -342,7 +398,7 @@ const SeeDetailsPet:React.FC =() =>{
 
               <ContainerInfoModal style={{marginTop:15}}>
                 <LabelModal>E-mail:</LabelModal>
-                <TextContatcModal>Nossaalegria@gmail.com</TextContatcModal>
+                <TextContatcModal>{user.email}</TextContatcModal>
                 <ButtonEmail>
                   <FiMail size={20} style={{marginRight:10}}/>
                   Enviar E-mail
