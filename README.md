@@ -27,9 +27,9 @@
 que estão em situação de vulnerabilidade a encontrarem um novo lar. Tanto pessoas como ONGS podem cadastrar esse pet.</br>
 Além disso, o Legged Angels, permite que pessoas possam encontrar seu pet perdido, fazendo o cadastro dele ou encontrando no sistema se já tiver sido cadastrado com o status de perdido por outra pessoa. É também possível visualizar ONGS na sua região através do mapa na nossa página inicial.
 
-</p>
+</p> 
 
-<br/>
+---
 
 ##  Funcionalidades
 
@@ -41,16 +41,13 @@ Além disso, o Legged Angels, permite que pessoas possam encontrar seu pet perdi
 - [x] Exibir informações sobre o dono do pet ou ONGs.
 ---
 
-<br/>
-
----
 ## Layout
 
 <h1>Versão web</h1>
 <p align="center" >
   <img alt="Legged Angels"  width="450px" title="Legged Angels" src="./src/assets/img00.png" /></br>
   <img alt="Legged Angels"  width="450px" title="Legged Angels" src="./assets/../src/assets/img01.png" /></br>
-  <img alt="Legged Angels"  width="450px" title="Legged Angels" src="./assets/../src/assets/img02.png" />
+  <img alt="Legged Angels"  width="450px" title="Legged Angels" src="./assets/../src/assets/img02.png" /></br>
   <img alt="Legged Angels"  width="450px" title="Legged Angels" src="./assets/../src/assets/img03.png" />
 </p>
 
