@@ -1,5 +1,5 @@
 import React,{ButtonHTMLAttributes} from 'react';
-import {FiArrowRight, FiEdit, FiTrash} from 'react-icons/fi';
+import {FiEdit, FiTrash} from 'react-icons/fi';
 
  import {
   Container,
@@ -11,11 +11,6 @@ import {FiArrowRight, FiEdit, FiTrash} from 'react-icons/fi';
   TextInfoPet,
   IconInfo,
   FooterCardPet,
-  ContainerSizePet,
-  CardSizePetP,
-  CardSizePetM,
-  CardSizePetG,
-  TextSizePet,
   ContainerViewPet,
   TextViewPet,
   ContainerButton

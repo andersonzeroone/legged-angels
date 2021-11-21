@@ -115,7 +115,7 @@ const ListPets: React.FC = () => {
 
   const [erros, setErros] = useState("");
 
-  const [isLostPets,setIsLostPet] = useState(false);
+  const [isLostPets,seIsLostPet] = useState(false);
 
   function handleNavigationSeeDetailsPet(idPet:number){
     console.log('id', idPet)
