@@ -1,46 +1,145 @@
-# Getting Started with Create React App
+<h1 align="center">
+  <img alt="Legged Angels" width="450px"  title="#Legged Angels" src="./src/assets/logoV.png" />
+</h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+<h4 align="center">
+	🚧  Legged Angels 🚀 em desenvolvimento 🚧
+</h4>
 
-In the project directory, you can run:
+<br/>
 
-### `yarn start`
+<p align="center">
+ <a href="#sobre-o-projeto">Sobre o projeto</a> •
+ <a href="#funcionalidades">Funcionalidades</a> •
+<a href="#layout">Layout</a> •
+ <a href="#como-executar-o-projeto">Como executar o projeto</a> •
+ <a href="#tecnologias">Tecnologias</a> •
+ <a href="#contribuidores">Contribuidores</a> •
+ <a href="#autor">Autor</a> •
+<a href="#licenc-a">Licença</a> •
+</p>
+<br/>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Sobre o projeto
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<p align="left"> O <strong>Legged Angels </strong>foi desenvolvido com a intenção de ajudar pets (animais de estimação como cachorro e gato)
+que estão em situação de vulnerabilidade a encontrarem um novo lar. Tanto pessoas como ONGS podem cadastrar esse pet.</br>
+Além disso, o Legged Angels, permite que pessoas possam encontrar seu pet perdido, fazendo o cadastro dele ou encontrando no sistema se já tiver sido cadastrado com o status de perdido por outra pessoa. É também possível visualizar ONGS na sua região através do mapa na nossa página inicial.
 
-### `yarn test`
+</p>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<br/>
 
-### `yarn build`
+##  Funcionalidades
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [x] Exibir ONGs próxima;
+- [x] Cadastro de pets:
+  - [x] Perdidos.
+  - [x] Para adoção;
+- [x] Exibir informações sobre o pet;
+- [x] Exibir informações sobre o dono do pet ou ONGs.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<br/>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
+## Layout
 
-### `yarn eject`
+<h1>Versão web</h1>
+<p align="center" >
+  <img alt="Legged Angels"  width="450px" title="Legged Angels" src="./src/assets/img00.png" /></br>
+  <img alt="Legged Angels"  width="450px" title="Legged Angels" src="./assets/../src/assets/img01.png" /></br>
+  <img alt="Legged Angels"  width="450px" title="Legged Angels" src="./assets/../src/assets/img02.png" />
+  <img alt="Legged Angels"  width="450px" title="Legged Angels" src="./assets/../src/assets/img03.png" />
+</p>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+---
+## Como executar o projeto
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Pré-requisitos
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
+[Git](https://git-scm.com) é um editor para trabalhar com o código como [VSCode](https://code.visualstudio.com/)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+#### 🎲 Rodando o projeto
 
-## Learn More
+```bash
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# Clone este repositório
+$ git clone git@github.com:andersonzeroone/legged-angels.git
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# Acesse a pasta do projeto no terminal/cmd
+$ cd legged-angels
+
+# Instale as dependências
+$ npm install ou yarn install
+
+# Execute a aplicação
+$  npm start ou yarn start
+
+# O projeto iniciará na porta:3333 - acesse http://localhost:3333
+```
+
+---
+##  Tecnologias
+
+As seguintes ferramentas foram usadas na construção do projeto:
+
+#### **Mobile**  ([React](https://pt-br.reactjs.org/)  +  [TypeScript](https://www.typescriptlang.org/))
+
+-   **[React Navigation](https://reactnavigation.org/)**
+-   **[Axios](https://github.com/axios/axios)**
+-   **[Leaflet](https://leafletjs.com/)**
+-   **[React Select](https://react-select.com/home)**
+-   **[Yup](https://www.npmjs.com/package/yup)**
+
+
+> Veja o arquivo  [package.json](https://github.com/andersonzeroone/legged-angels/blob/main/package.json)
+
+**Utilitários**
+
+-   Editor:  **[Visual Studio Code](https://code.visualstudio.com/)**
+
+---
+## Contribuidores
+
+💜 Um super thanks 👏 para essa galera que fez esse produto sair do campo da ideia e entrar nas lojas de aplicativos :)
+
+## Como contribuir para o projeto
+
+1. Faça um **fork** do projeto.
+2. Crie uma nova branch com as suas alterações: `git checkout -b my-feature`
+3. Salve as alterações e crie uma mensagem de commit contando o que você fez: `git commit -m "feature: My new feature"`
+4. Envie as suas alterações: `git push origin my-feature`
+> Caso tenha alguma dúvida confira este [guia de como contribuir no GitHub](./CONTRIBUTING.md)
+
+---
+
+##  Autor
+</br>
+
+<a href="https://github.com/andersonzeroone">
+ <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/33969430?v=4" width="100px;" alt=""/>
+ <br />
+ <br />
+ <sub><b>Anderson Pablo</b></sub></a> <a href="https://www.linkedin.com/in/anderson-pablo-js/" title="andersonPablo">🚀</a>
+ <br />
+
+
+ [![Linkedin Badge](https://img.shields.io/badge/-Anderson-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/anderson-pablo-js/)](https://www.linkedin.com/in/anderson-pablo-js/)
+[![Gmail Badge](https://img.shields.io/badge/-anderson.pablo02@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:anderson.pablo02@gmail.com)](mailto:anderson.pablo02@gmail.com)
+
+---
+
+## Licença
+
+Este projeto está sob a licença [MIT](./LICENSE).
+
+Feito com ❤️ por Anderson Pablo 👋🏽 [Entre em contato!](https://www.linkedin.com/in/anderson-pablo-js/)
+
+---
+
+<!-- ##  Versões do README
+
+[Português 🇧🇷](./README.md)  |  [Inglês sem emojis 🇺🇸](./README-en.md) | [Portugues sem logo  🇧🇷](./README-sem-logo.md)  -->
