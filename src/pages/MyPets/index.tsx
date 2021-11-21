@@ -1,12 +1,12 @@
 import { Form } from "@unform/web";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import api from "../../services/api";
 import { FiSearch, FiX } from "react-icons/fi";
 import Modal from "react-modal";
 import { useAuth } from "../../hooks/AuthContext";
 
-import imgDogToy from "../../assets/dogToy.png";
+// import imgDogToy from "../../assets/dogToy.png";
 import imgType from "../../assets/imgType.png";
 import imgStatus from "../../assets/imgStatus.png";
 import imgSex from "../../assets/imgSex.png";
@@ -22,10 +22,6 @@ import Footer from "../../components/footer";
 
 import {
   Container,
-  ContainerSlide,
-  ContentSlide,
-  ImageDog,
-  TextSlide,
   Title,
   ContainerFilter,
   ContainerCards,
@@ -113,12 +109,15 @@ const MyPets: React.FC = () => {
 
   const [isLostPets, setIsLostPet] = useState(false);
 
-  function handleNavigationSeeDetailsPet(idPet: number) {
-    console.log("id", idPet);
-    history.push("seeDetailsPet", { idPet });
-  }
+  // function handleNavigationSeeDetailsPet(idPet: number) {
+  //   console.log("id", idPet);
+  //   history.push("seeDetailsPet", { idPet });
+  // }
 
   useEffect(() => {
+
+    setIsLostPet(false);
+
     if(!!token){
       api
         .get("v1/pets/ofUserAuth", {
@@ -137,7 +136,7 @@ const MyPets: React.FC = () => {
           console.log(err.response.data.result.mensagem);
         });
     }
-  }, []);
+  }, [token]);
 
   const handleData = useCallback(async (dataForm: FilterPetProps) => {
     try {

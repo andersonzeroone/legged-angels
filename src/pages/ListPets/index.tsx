@@ -123,6 +123,8 @@ const ListPets: React.FC = () => {
   }
 
   useEffect(()=>{
+    seIsLostPet(false);
+
     api.get('v1/searchLocation',{
       params:{
         species:data.species,

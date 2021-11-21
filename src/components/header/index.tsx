@@ -39,7 +39,7 @@ const Header: React.FC<isUserProps> = ({isUser,imageUser, nameUser}) => {
   const hanldeSignOut = useCallback(()=>{
     signOut();
     history.push('/')
-  },[signOut]);
+  },[]);
 
   const {user} = useAuth();
 

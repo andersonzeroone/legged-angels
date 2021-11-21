@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import {Form} from '@unform/web';
 import {FormHandles} from '@unform/core';
 import axios from 'axios';
@@ -124,7 +124,7 @@ function Home(){
 
   const {token} = useAuth();
 
-  const [position, setPosition] = useState({ lat:-11.2020652,lng:-40.521877});
+  // const [position, setPosition] = useState({ lat:-11.2020652,lng:-40.521877});
 
   const formRef = useRef<FormHandles>(null);
 
