@@ -116,7 +116,6 @@ const LostPets: React.FC = () => {
   const [isLostPets,setIsLostPet] = useState(false);
 
   function handleNavigationSeeDetailsPet(idPet: number) {
-    console.log("id", idPet);
     history.push("seeDetailsPet", { idPet });
   }
 
@@ -155,7 +154,6 @@ const LostPets: React.FC = () => {
         if (response.data) {
           setIsLostPet(true);
         }
-        console.log(response.data);
         setLostPets(response.data);
       } catch (err) {
         setErros(err.response.data.result.mensagem);

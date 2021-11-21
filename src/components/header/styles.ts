@@ -15,6 +15,11 @@ export const ContainerHeader = styled.nav`
   border-bottom:1px solid #5390A6;
 `;
 
+export const Logo = styled.img`
+  width:15%;
+  height:60px;
+`;
+
 export const ContainerButtonNav = styled.ul`
   text-decoration:none;
   display:flex;

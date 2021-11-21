@@ -176,3 +176,20 @@ export const TitleNotLostPetParmsFilter = styled.h1`
 export const ImageNotLostPetParmsFilter = styled.img`
   height:400px;
 `;
+
+export const ContainerLogon = styled.div`
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:20px;
+`;
+
+export const TitleLogon = styled.div`
+  font-size:1.8rem;
+  font-family:'Mulish', serif;
+`;
+
+export const ImageLogon = styled.img`
+  height:20rem;
+  margin:20px 0;
+`;

@@ -33,6 +33,7 @@ import {
   FooterModal,
   ButtonCloseModal,
  } from './styles';
+import { useAuth } from '../../hooks/AuthContext';
 
 interface RouteParms{
   uf: string;
@@ -77,6 +78,8 @@ interface FilterOngsProps{
 const ListOngs: React.FC = () => {
   const history = useHistory();
 
+  const {token} = useAuth();
+
   const route = useLocation();
   const data = route.state as RouteParms;
 
@@ -100,7 +103,6 @@ const ListOngs: React.FC = () => {
       }
     })
       .then(res=>{
-        console.log(res.data);
         setOngs(res.data);
 
       }).catch(err => {
@@ -130,9 +132,9 @@ const ListOngs: React.FC = () => {
     setSelectedUf(value);
   }
 
-  function handleNavigationListPets(idOng:number){
-    console.log('id', idOng)
-    history.push('listPets',{idOng});
+  function handleNavigationListPets(idUser:number){
+    console.log('id', idUser)
+    history.push('listPetsOfOng',{idUser,page:1});
   }
 
   const getDataFilter = useCallback(async(data:FilterOngsProps)=>{
@@ -169,7 +171,9 @@ const ListOngs: React.FC = () => {
   return(
     <>
       <Container>
-        <Header/>
+        <Header
+          isUser={!!token}
+        />
 
         <ContainerSlide>
           <ImageDog src={imgDogToy}/>

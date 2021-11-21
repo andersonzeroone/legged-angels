@@ -320,3 +320,33 @@ export const ButtonCloseModal = styled.button`
   }
 
 `;
+
+export const ContainerPoupMap = styled.div`
+  width:100%;
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:flex-start;
+`;
+
+
+export const ImageOngPoup = styled.img`
+  width:60px;
+  height:60px;
+  border-radius:50px;
+
+  margin-right:15px;
+`;
+
+export const NameOngPoup = styled.p`
+  margin-right:10px;
+
+  font-size:1.3rem;
+  font-family:'Mulish', serif;
+`;
+
+
+export const ButtonViewOng = styled.button`
+  border:0;
+  background:none;
+`;

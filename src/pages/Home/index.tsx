@@ -6,7 +6,7 @@ import axios from 'axios';
 import {useHistory} from 'react-router-dom';
 import {useAuth} from '../../hooks/AuthContext';
 import Modal from 'react-modal';
-import { FiX } from 'react-icons/fi';
+import { FiArrowRight, FiX } from 'react-icons/fi';
 
 import {
   ConatinerMain,
@@ -45,13 +45,17 @@ import {
   ButtonCloseModal,
   Footer,
   ImageFooterBackgound,
-
+  ContainerPoupMap,
+  ImageOngPoup,
+  NameOngPoup,
+  ButtonViewOng
  } from './styles';
 
 import imgDogCat from '../../assets/ImgDogCat.png';
 import imgDog from '../../assets/ImgDog.png';
 import divisor from '../../assets/divisor.png';
 import backGroundFooter from '../../assets/imgfooter.png';
+import IconMap from '../../utils/mapIcon';
 
 import Button from '../../components/button';
 import CardPets from '../../components/CardPet';
@@ -107,6 +111,14 @@ const customStyles = {
   }
 };
 
+interface OngsPositionsprops{
+  idUser:number;
+  name:string;
+  photoProfile:string;
+  lat:string;
+  long:string;
+}
+
 function Home(){
   const history = useHistory();
 
@@ -124,6 +136,8 @@ function Home(){
   const [typeSearchPet,setTypeSearchPet] = useState(true);
 
   const [petLost,setPetLost] = useState<PetProps[]>([])
+
+  const [ongPotions,setOngPositions] = useState<OngsPositionsprops[]>([]);
 
   const [filterPetLost, setFilterPetLost] = useState(false);
 
@@ -159,6 +173,17 @@ function Home(){
     api.get('v1/pets/lost/oldest')
       .then(res =>{
         setPetLost(res.data);
+      }).catch(err =>{
+        console.log(err.response.data.result.mensagem)
+      });
+
+  },[]);
+
+  useEffect(()=>{
+    api.get('v1/user/searchLocation')
+      .then(res =>{
+        setOngPositions(res.data);
+        console.log(res.data);
       }).catch(err =>{
         console.log(err.response.data.result.mensagem)
       });
@@ -234,6 +259,10 @@ function Home(){
 
   function handleisModal(){
     setIsOpen((state) => !state);
+  }
+
+  function handleNavigationListPets(idUser:number){
+    history.push('listPetsOfOng',{idUser,page:1});
   }
 
   return(
@@ -439,7 +468,25 @@ function Home(){
               // url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env}`}
               // url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_ACCESS_TOKEN_MAP_BOX}`}
             />
-            <LocationMarker/>
+
+            {ongPotions.map((ong,index)=>(
+              <Marker
+                key={index}
+                icon={IconMap}
+                position={[parseInt(ong.lat),parseInt(ong.long)]}
+              >
+              <Popup closeButton={false}  className='map-popup'>
+                <ContainerPoupMap>
+                  <ImageOngPoup src={ong.photoProfile}/>
+                  <NameOngPoup>{ong.name}</NameOngPoup>
+                  <ButtonViewOng onClick={()=> handleNavigationListPets(ong.idUser)}>
+                  <FiArrowRight size={25} color='#000'/>
+                </ButtonViewOng>
+                </ContainerPoupMap>
+              </Popup>
+
+              </Marker>
+            ))}
           </MapContainer>
         </ContainerMap>
       </ContainerPositionMapOngs>

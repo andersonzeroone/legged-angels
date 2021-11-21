@@ -61,6 +61,7 @@ import {
   ButtonCloseModal
 
 } from "./styles";
+import { useAuth } from '../../hooks/AuthContext';
 
 
 const customStyles = {
@@ -132,11 +133,11 @@ interface UserProps{
 // }
 
 const SeeDetailsPet:React.FC =() =>{
+  const {token} = useAuth();
 
   const route = useLocation();
   const {idPet} = route.state as DetailsPetProps;
 
-  console.log('idParm', idPet)
   const history = useHistory();
 
   const [modalIsOpen,setIsOpen] = useState(false);
@@ -186,7 +187,9 @@ const SeeDetailsPet:React.FC =() =>{
   return (
     <>
       <Container>
-        <Header/>
+        <Header
+          isUser={!!token}
+        />
         <ContainerButttonGoBack>
           <ButtonGoBack onClick={()=> history.goBack()}>
             <FiArrowLeft style={{ marginRight: 5 }} />

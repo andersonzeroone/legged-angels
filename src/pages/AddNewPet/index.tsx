@@ -9,6 +9,7 @@ import { FiArrowLeft, FiPlus, FiType, FiX } from "react-icons/fi";
 import api from "../../services/api";
 import { useAuth } from "../../hooks/AuthContext";
 
+
 import getValidationErrors from "../../utils/getValidationErrors";
 
 import imgLogon from "../../assets/imgLogon.png";
@@ -136,7 +137,7 @@ const AddNewPet: React.FC = () => {
   }
 
   async function handleSubmit(data: PetProps) {
-    console.log(data);
+
     try {
       formRef.current?.setErrors({});
 
@@ -162,6 +163,7 @@ const AddNewPet: React.FC = () => {
         feature,
       };
 
+      console.log(newData);
       const dataPet = new FormData();
 
       dataPet.append("name", newData.name);
@@ -180,18 +182,25 @@ const AddNewPet: React.FC = () => {
         dataPet.append("photos", photosPet);
       });
 
-      await api.post("/v1/user/register", dataPet);
+      await api.post('v1/pets/register', dataPet,{
+        headers:{
+          'Authorization': `Bearer ${token}`
+        }
+      });
 
-      console.log(newData);
+      setErrosForm('Pet cadastrado com sucesso!');
+
+      history.push('/');
+
     } catch (err) {
-      if (err instanceof Yup.ValidationError) {
+      if(err instanceof Yup.ValidationError) {
         const erros = getValidationErrors(err);
         formRef.current?.setErrors(erros);
         setIsOpen(true);
         return;
       }
 
-      console.log("dateErros", err.response.data.result.mensagem);
+      console.log('dateErros', err.response.data.result.mensagem);
       setErrosForm(err.response.data.result.mensagem);
       setIsOpen(true);
       return;
@@ -250,7 +259,7 @@ const AddNewPet: React.FC = () => {
                       setStatus(changeEvent.target.value)
                     }
                   />
-                  Para Adoção
+                  Macho
                 </LabelInputRadio>
 
                 <LabelInputRadio>
@@ -262,7 +271,7 @@ const AddNewPet: React.FC = () => {
                       setStatus(changeEvent.target.value)
                     }
                   />
-                  Perdido
+                  Fêmea
                 </LabelInputRadio>
               </ContainerRadio>
 
@@ -277,7 +286,7 @@ const AddNewPet: React.FC = () => {
                     value="male"
                     onChange={(changeEvent) => setSex(changeEvent.target.value)}
                   />
-                  Para Adoção
+                  Macho
                 </LabelInputRadio>
 
                 <LabelInputRadio>
@@ -287,7 +296,7 @@ const AddNewPet: React.FC = () => {
                     value="female"
                     onChange={(changeEvent) => setSex(changeEvent.target.value)}
                   />
-                  Perdido
+                  Fêmea
                 </LabelInputRadio>
               </ContainerRadio>
 

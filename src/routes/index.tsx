@@ -9,7 +9,8 @@ import ListPets from '../pages/ListPets';
 import SeeDetailsPet from '../pages/SeeDetailsPet';
 import LostPets from '../pages/LostPets';
 import ListOngs from '../pages/ListOngs';
-
+import ListPetsOfOng from '../pages/ListPetsOfOng';
+import MyPets from '../pages/MyPets';
 
 const Routes: React.FC=()=>(
   <Switch>
@@ -21,6 +22,9 @@ const Routes: React.FC=()=>(
     <Route path='/seeDetailsPet'  component={SeeDetailsPet}/>
     <Route path='/lostPet'  component={LostPets}/>
     <Route path='/listOngs'  component={ListOngs}/>
+    <Route path='/listPetsOfOng'  component={ListPetsOfOng}/>
+    <Route path='/MyPets'  component={MyPets}/>
+
 
   </Switch>
 )

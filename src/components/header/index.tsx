@@ -1,14 +1,16 @@
 import React, { useCallback } from 'react';
 import {FiLogIn,FiLogOut,FiUserPlus} from 'react-icons/fi';
 import {useAuth} from '../../hooks/AuthContext';
-
+import {useHistory} from 'react-router-dom';
 import imgHome from '../../assets/home.png';
 import imgAddPet from '../../assets/addPet.png';
 import imgMyPet from '../../assets/myPet.png';
+import logoV from '../../assets/logoV.png';
 
 import {
   ContainerHeader,
   ContainerButtonNav,
+  Logo,
   ContainerMenu,
   ButtonNav,
   Links,
@@ -32,9 +34,11 @@ interface isUserProps{
 const Header: React.FC<isUserProps> = ({isUser,imageUser, nameUser}) => {
 
   const { signOut} = useAuth();
+  const history = useHistory();
 
   const hanldeSignOut = useCallback(()=>{
     signOut();
+    history.push('/')
   },[signOut]);
 
   const {user} = useAuth();
@@ -42,7 +46,7 @@ const Header: React.FC<isUserProps> = ({isUser,imageUser, nameUser}) => {
   return (
     <>
       <ContainerHeader>
-        <p>LOGO</p>
+        <Logo src={logoV}/>
         <ContainerMenu>
           <ContainerButtonNav>
             <ButtonNav>
@@ -64,7 +68,7 @@ const Header: React.FC<isUserProps> = ({isUser,imageUser, nameUser}) => {
             </ButtonNav>
 
             <ButtonNav>
-              <Links to='/'>
+              <Links to='/MyPets'>
                 <IconButtonNav
                   src={imgMyPet}
                 />
